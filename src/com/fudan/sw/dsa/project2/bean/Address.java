@@ -20,6 +20,10 @@ public class Address
 	private Address pi_leastChange = null;
 	private ArrayList<Edge> edgesAfter = new ArrayList<>();
 	private Edge fromEdge = null;
+	private ArrayList thisVertexHasLine = new ArrayList();
+	private int color = 0; //white
+	private int changeTimes = 999999;
+	private ArrayList<Address> piList;
 
 
 	public Address(String address,String longitude,String latitude)
@@ -84,6 +88,32 @@ public class Address
 	}
 	public void setPi_leastChange(Address pi_leastChange) {
 		this.pi_leastChange = pi_leastChange;
+	}
+	public ArrayList getThisVertexHasLine() {
+		return thisVertexHasLine;
+	}
+	public void setThisVertexHasLine(ArrayList thisVertexHasLine) {
+		this.thisVertexHasLine = thisVertexHasLine;
+	}
+	public int getColor() {
+		return color;
+	}
+	public void setColor(int color) {
+		this.color = color;
+	}
+	public int getChangeTimes() {
+		return changeTimes;
+	}
+	public void setChangeTimes(int changeTimes) {
+		this.changeTimes = changeTimes;
+	}
+
+	public ArrayList<Address> getPiList() {
+		return piList;
+	}
+
+	public void setPiList(ArrayList<Address> piList) {
+		this.piList = piList;
 	}
 }
 

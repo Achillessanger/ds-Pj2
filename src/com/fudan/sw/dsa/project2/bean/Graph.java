@@ -9,7 +9,8 @@ import java.util.ArrayList;
  */
 public class Graph {
     private ArrayList<Address> vertexList;
-    private ArrayList<ArrayList<Edge>> undergroundLines;
+    private ArrayList<ArrayList<Edge>> undergroundLines = new ArrayList<>();
+    private ArrayList<ArrayList<Address>> vertxeUnion = new ArrayList<>();
     int vertexNum = 0;
     int edgeLength = 0;
 
@@ -38,10 +39,14 @@ public class Graph {
     public void setVertexList(ArrayList<Address> vertexList) {
         this.vertexList = vertexList;
     }
-//    public void addEdge(Edge edge){
-//        edge.previousVertex.edgesAfter.add(edge);
-//        edge.nextVertex.edgesAfter.add(edge);
-//       // edge.nextVertex.egdesBefore.add(edge);
-//    }
+
+    public ArrayList<ArrayList<Address>> getVertxeUnion() {
+        return vertxeUnion;
+    }
+
+    public void setVertxeUnion(ArrayList<ArrayList<Address>> vertxeUnion) {
+        this.vertxeUnion = vertxeUnion;
+    }
+
 
 }
