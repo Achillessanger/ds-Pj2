@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.util.*;
 
 import com.fudan.sw.dsa.project2.bean.*;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.stereotype.Service;
 
 import com.fudan.sw.dsa.project2.constant.FileGetter;
@@ -43,16 +44,29 @@ public class IndexService
 				String [] pretime2 = new String[2];
 				String [] lasTime = new String[2];
 				String [] lasTime2 = new String[2];
-				Address fromVertex_edge = null;
+				Address fromVertex_edge = null;//////////////////////导致第一个车站无法录入
 				Address fromVertex_edge2 = null;
+				String stationName = "";
+				String stationName2 = "";
+
 
 				ArrayList<Edge> lineRecord = new ArrayList<>();
 				ArrayList<Edge> lineRecord2 = new ArrayList<>();
 				ArrayList<Address> vertexUnionRecord = new ArrayList<>();
 				ArrayList<Address> vertexUnionRecord2 = new ArrayList<>();
+				int isFirstVertex = 1;
 				while((line=bufferedReader.readLine())!=null)
 				{
 					if(line.indexOf("Line") != -1){
+						if(!stationName.equals("")){
+							graph.getStationNameArrL().add(stationName);
+							stationName = "";
+						}
+						if(!stationName2.equals("")){
+							graph.getStationNameArrL().add(stationName2);
+							stationName2 = "";
+						}
+						isFirstVertex = 1;
 						lineRecord = new ArrayList<>();
 						vertexUnionRecord = new ArrayList<>();
 						graph.getUndergroundLines().add(lineRecord);
@@ -84,6 +98,7 @@ public class IndexService
 												lasTime2 = arrStr[4].split(":");
 												if(!arrStr[3].equals("--")){
 													vertexUnionRecord.add(address);
+													stationName += "&" + arrStr[0];
 													int time = 60*(Integer.parseInt(lasTime[0])-Integer.parseInt(pretime[0]))+Integer.parseInt(lasTime[1])-Integer.parseInt(pretime[1]);
 													Edge edge1 = new Edge(fromVertex_edge,address,time,transport);
 													Edge edge11 = new Edge(address,fromVertex_edge,time,transport);
@@ -99,6 +114,7 @@ public class IndexService
 												}
 												if(!arrStr[4].equals("--")){
 													vertexUnionRecord2.add(address);
+													stationName2 += "&" + arrStr[0];
 													int time2 = 60*(Integer.parseInt(lasTime2[0])-Integer.parseInt(pretime2[0]))+Integer.parseInt(lasTime2[1])-Integer.parseInt(pretime2[1]);
 													Edge edge2 = new Edge(fromVertex_edge2,address,time2,transport);
 													Edge edge22 = new Edge(address,fromVertex_edge2,time2,transport);
@@ -113,6 +129,7 @@ public class IndexService
 												}
 											}else {
 												vertexUnionRecord.add(address);
+												stationName += "&" + arrStr[0];
 												int time = 60*(Integer.parseInt(lasTime[0])-Integer.parseInt(pretime[0]))+Integer.parseInt(lasTime[1])-Integer.parseInt(pretime[1]);
 												Edge edge = new Edge(fromVertex_edge,address,time,transport);
 												Edge edgee = new Edge(address,fromVertex_edge,time,transport);
@@ -131,15 +148,30 @@ public class IndexService
 											if(!arrStr[3].equals("--")){
 												pretime = arrStr[3].split(":");
 												fromVertex_edge = address;
+												if(isFirstVertex == 1){
+													vertexUnionRecord.add(address);
+													stationName += "&" + arrStr[0];
+												}
 											}
 											if(!arrStr[4].equals("--")){
 												pretime2 = arrStr[4].split(":");
 												fromVertex_edge2 = address;
+												if(isFirstVertex == 1){
+													vertexUnionRecord2.add(address);
+													stationName2 +="&" +  arrStr[0];
+												}
 											}
 
 										}else {
 											pretime = arrStr[3].split(":");
 											fromVertex_edge = address;
+											if(isFirstVertex == 1){
+												vertexUnionRecord.add(address);
+												stationName += "&" + arrStr[0];
+											}
+										}
+										if(isFirstVertex == 1){
+											isFirstVertex++;
 										}
 
 										break;
@@ -149,6 +181,9 @@ public class IndexService
 									Address vertex = new Address(arrStr[0],arrStr[1],arrStr[2]);//节点不曾出现就新建节点
 									graph.appendVertex(vertex);
 									vertex.getThisVertexHasLine().add(lineIndex);
+									graph.getMap().put(arrStr[0],vertex);
+									graph.getMapMatrixIndex().put(arrStr[0],graph.getVertexNum()-1);//从0开始
+//									System.out.println("num:" + graph.getVertexNum());
 
 									if(fromVertex_edge != null){
 										lasTime = arrStr[3].split(":");
@@ -156,6 +191,7 @@ public class IndexService
 											lasTime2 = arrStr[4].split(":");
 											if(!arrStr[3].equals("--")){
 												vertexUnionRecord.add(vertex);
+												stationName += "&" + arrStr[0];
 												int time = 60*(Integer.parseInt(lasTime[0])-Integer.parseInt(pretime[0]))+Integer.parseInt(lasTime[1])-Integer.parseInt(pretime[1]);
 												Edge edge1 = new Edge(fromVertex_edge,vertex,time,transport);
 												Edge edge11 = new Edge(vertex,fromVertex_edge,time,transport);
@@ -170,6 +206,7 @@ public class IndexService
 											}
 											if(!arrStr[4].equals("--")){
 												vertexUnionRecord2.add(vertex);
+												stationName2 +="&" +  arrStr[0];
 												int time2 = 60*(Integer.parseInt(lasTime2[0])-Integer.parseInt(pretime2[0]))+Integer.parseInt(lasTime2[1])-Integer.parseInt(pretime2[1]);
 												Edge edge2 = new Edge(fromVertex_edge2,vertex,time2,transport);
 												Edge edge22 = new Edge(vertex,fromVertex_edge,time2,transport);
@@ -184,6 +221,7 @@ public class IndexService
 											}
 										}else {
 											vertexUnionRecord.add(vertex);
+											stationName += "&" + arrStr[0];
 											int time = 60*(Integer.parseInt(lasTime[0])-Integer.parseInt(pretime[0]))+Integer.parseInt(lasTime[1])-Integer.parseInt(pretime[1]);
 											Edge edge = new Edge(fromVertex_edge,vertex,time,transport);
 											Edge edgee = new Edge(vertex,fromVertex_edge,time,transport);
@@ -199,57 +237,86 @@ public class IndexService
 
 
 									}
+
 									if(lineIndex == 10 || lineIndex == 11){
 										if(!arrStr[3].equals("--")){
 											pretime = arrStr[3].split(":");
 											fromVertex_edge = vertex;
+											if(isFirstVertex == 1){
+												vertexUnionRecord.add(vertex);
+												stationName += "&" + arrStr[0];
+											}
 										}
 										if(!arrStr[4].equals("--")){
 											pretime2 = arrStr[4].split(":");
 											fromVertex_edge2 = vertex;
+											if(isFirstVertex == 1){
+												vertexUnionRecord2.add(vertex);
+												stationName2 +="&" +  arrStr[0];
+											}
 										}
 									}else {
 										pretime = arrStr[3].split(":");
 										fromVertex_edge = vertex;
+										if(isFirstVertex == 1){
+											vertexUnionRecord.add(vertex);
+											stationName +="&" +  arrStr[0];
+										}
+									}
+
+									if(isFirstVertex == 1){
+										isFirstVertex++;
 									}
 
 
 								}
-								//System.out.println(arrStr[0]+" "+arrStr[1]+" "+arrStr[2]+" ");
+
 								break;
+
 						}
 					}
 
 
 				}
-//				for (Address a : graph.getVertexList()){
-//					if(a.getAddress().equals("上大路"))
-//						System.out.println("上大路"+graph.getVertexList().indexOf(a));
-//					if(a.getAddress().equals("五角场"))
-//						System.out.println("五角场"+graph.getVertexList().indexOf(a));
-////					if(a.getAddress().equals("虹桥火车站"))
-////						System.out.println("虹桥火车站"+graph.getVertexList().indexOf(a));
-////					if(a.getAddress().equals("徐泾北城"))
-////						System.out.println("徐泾北城"+graph.getVertexList().indexOf(a));
-//
+				graph.getStationNameArrL().add(stationName);
+
+
+//				System.out.println(graph.getStationNameArrL().get(0).indexOf("莘庄")+"？？？？？？？");
+//				for(String s : graph.getStationNameArrL()){
+//					System.out.println(s+"\n\n");
 //				}
-//
-//				System.out.println("=====================");
+			//	System.out.println("?????"+"&新江湾城&殷高东路&三门路&江湾体育场&五角场&国权路&同济大学&四平路&邮电新村&海伦路&四川北路&天潼路&南京东路&豫园&老西门&新天地&陕西南路&上海图书馆&交通大学&虹桥路&宋园路&伊犁路&水城路&龙溪路&上海动物园&虹桥1号航站楼&虹桥2号航站楼&虹桥火车站".substring(72,136));
 //				for(ArrayList<Edge> al : graph.getUndergroundLines()){
-//					System.out.println(al.get(0).lineIndex);
-//					int k = 1;
-//					for(Edge e:al){
-//						if(k==1){
-//							System.out.println(e.getPreviousVertex().getAddress()+"---"+e.getNextVertex().getAddress());
-//							k = 2;
-//						}else {
-//							k=1;
-//							continue;
-//						}
-//
+//					for(Edge e : al){
+//						System.out.println(e.getPreviousVertex().getAddress()+"  "+e.getNextVertex().getAddress());
 //					}
+//					System.out.println("\n\n");
 //				}
-				
+//
+//				int ddd = 1;
+//				for(ArrayList<Address> debug:graph.getVertxeUnion()){
+//					System.out.println(ddd+":");
+//					for(Address debugg:debug){
+//						System.out.println(debugg.getAddress());
+//					}
+//					System.out.println("\n\n\n");
+//					ddd++;
+//				}
+
+				for(int i = 0; i < 17; i++){ //只算地铁的话是只有17
+					int[][] matrix = new int[graph.getVertexNum()][graph.getVertexNum()];
+					for(Address address : graph.getVertxeUnion().get(i)){
+						for(Address relation : graph.getVertxeUnion().get(i)){
+							if(relation == address)
+								continue;
+							dijkstra(graph,address,relation);
+							matrix[graph.getMapMatrixIndex().get(address.getAddress())][graph.getMapMatrixIndex().get(relation.getAddress())] = (int)relation.getD();
+						}
+					}
+					graph.getMatrixChangeLeastArrList().add(matrix);
+				}
+				graph.setMatrixTogether(matrixAddAll(graph.getMatrixChangeLeastArrList()));
+
 			}
 			catch (Exception e) 
 			{
@@ -276,7 +343,7 @@ public class IndexService
 		System.out.println(endLongitude);
 		System.out.println(endLatitude);
 		System.out.println(choose);
-		
+
 		Address startPoint = new Address(startAddress, startLongitude, startLatitude);
 		Address endPoint = new Address(endAddress, endLongitude, endLatitude);
 		List<Address> addresses=new ArrayList<Address>();
@@ -290,7 +357,6 @@ public class IndexService
 			Address endVertex = null;
 			double minDistance1 = 99999999;
 			double minDisrance2 = 99999999;
-			double debug = 0;
 			for(Address address : graph.getVertexList()){
 				if(getDistance(startPoint,address) < minDistance1){
 					startVertex = address;
@@ -311,35 +377,39 @@ public class IndexService
 			}
 			System.out.println(endVertex.getD());
 			time = endVertex.getD() + (int)((minDistance1 + minDisrance2) / (5000 / 60)) ;
+			System.out.println("距离1："+minDistance1);
+			System.out.println("距离2："+minDisrance2);
 
 			break;
 		case "2":
 			//换乘最少
+			long t1 = System.currentTimeMillis();
 			addresses.clear();
-			startVertex = graph.getVertexList().get(151);
-			endVertex = graph.getVertexList().get(219);
+			Address startVertex2 = null; //= graph.getVertexList().get(0)
+			Address endVertex2 = null;
+			double minDistance12 = 99999999;
+			double minDisrance22 = 99999999;
+			for(Address address : graph.getVertexList()){
+				if(getDistance(startPoint,address) < minDistance12){
+					startVertex2 = address;
+					minDistance12 = getDistance(startPoint,address);
+				}
+				if(getDistance(endPoint,address) < minDisrance22){
+					endVertex2 = address;
+					minDisrance22 = getDistance(endPoint,address);
+				}
 
-			dijkstra(graph,startVertex,endVertex);
-			Address tmp2 = endVertex;
-			while (tmp2 != null){
-				addresses.add(0,tmp2);
-				tmp2 = tmp2.getPi();
 			}
-			System.out.println(endVertex.getD());
-			time = endVertex.getD() ;
+//			startVertex2 = graph.getVertexList().get(0);
+//			endVertex2 = graph.getVertexList().get(graph.getVertexList().size()-1);
+			addresses = findCase2Route(graph,startVertex2,endVertex2);
+			time = endVertex2.getD() + (int)((minDistance12 + minDisrance22) / (5000 / 60));
+			long t2 = System.currentTimeMillis() - t1;
+			System.out.println("case2用时： "+t2+" ms");
+			endVertex2.setD(999999);
 
-//			//dijkstra_least_change(graph,startPoint,endPoint);
-//			Address tmp2 = endPoint.getPi();
-//			while (tmp2.getPi() != null){
-//				addresses.add(0,tmp2);
-//				tmp2 = tmp2.getPi();
-//			}
-//			addresses.add(endPoint);
-//			time = endPoint.getD();//////////////////
-//			System.out.println(graph.getVertexList().get(10).getD());
-//			System.out.println(graph.getVertexList().get(55).getD());
-//			System.out.println(graph.getVertexList().get(227).getD());
-//			System.out.println(graph.getVertexList().get(315).getD());
+
+
 			break;
 		case "3":
 			//时间最短:
@@ -361,16 +431,20 @@ public class IndexService
 			while (tmp3 != null){
 				addresses.add(0,tmp3);
 				tmp3 = tmp3.getPi();
+
 			}
 			addresses.remove(0);
 			time = (int)endPoint.getD() ;
+			double distance2 = getDistance(addresses.get(addresses.size()-1),endPoint);//addresses.get(1).getFromEdge().getWeight();
+			double diatance1 = getDistance(startPoint,addresses.get(0));//endPoint.getFromEdge().getWeight();////////////////
 			graph.getVertexList().remove(startPoint);
 			graph.getVertexList().remove(endPoint);
 			for(Address address : graph.getVertexList()){
 				address.getEdgesAfter().remove(0);
 
 			}
-
+			System.out.println("距离1："+diatance1);
+			System.out.println("距离2："+distance2);
 			break;
 		default:
 			break;
@@ -462,6 +536,235 @@ public class IndexService
 //			}
 //		}
 //	}
+
+	public List<Address> findCase2Route(Graph G, Address S, Address T){//16????
+		List<Address> addresses=new ArrayList<Address>();
+		double time = 999999;
+		int[] changeRoute = {999999,999999,999999};
+		Address[] changeStation = new Address[2];
+		int Sindex = G.getMapMatrixIndex().get(S.getAddress());
+		int Tindex = G.getMapMatrixIndex().get(T.getAddress());
+		if(G.getMatrixTogether()[Sindex][Tindex] > 0){ //直接可以到达
+			for(int[][] m : G.getMatrixChangeLeastArrList()){
+				if(m[Sindex][Tindex] > 0){
+					//G.getMatrixChangeLeastArrList().indexOf(m)
+					if(time > m[Sindex][Tindex]){
+						time = m[Sindex][Tindex];
+						changeRoute[0] = G.getMatrixChangeLeastArrList().indexOf(m);
+					}
+				}
+			}
+
+			int firstIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress());
+			int lastIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(T.getAddress()) + T.getAddress().length() + 1;/////////maybe wrong
+			int firstIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) + S.getAddress().length() + 1;
+			int lastIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(T.getAddress());/////////maybe wrong
+
+			if(G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) < G.getStationNameArrL().get(changeRoute[0]).indexOf(T.getAddress())){
+				String routeStr = (lastIn < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(firstIn,lastIn):G.getStationNameArrL().get(changeRoute[0]).substring(firstIn);
+				String[] routeLittle = routeStr.split("&");
+				for (int i = 0; i < routeLittle.length; i++){
+					addresses.add((Address) G.getMap().get(routeLittle[i]));
+				}
+			}else {
+				String routeStr = (firstIn2 < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2,firstIn2):G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2);
+				String[] routeLittle = routeStr.split("&");
+				for (int i = 0; i < routeLittle.length; i++){
+					addresses.add(0,(Address) G.getMap().get(routeLittle[i]));
+				}
+			}
+
+		}else{
+			//转乘1次
+			for(int i = 0; i < G.getMatrixChangeLeastArrList().size(); i++){
+				for(int j = 0; j <G.getMatrixChangeLeastArrList().size(); j++){
+					//换乘1次
+					int timeTmp = 0;
+					for(int k = 0; k < G.getMatrixTogether().length; k++){
+						if(G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][Tindex] == 0)
+							timeTmp = 0;
+						else {
+							timeTmp = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][Tindex];
+							if(timeTmp < time){
+								time = timeTmp;
+								changeRoute[0] = i;
+								changeRoute[1] = j;//i号线转j号线
+								changeStation[0] = G.getVertexList().get(k);///////////maybe wrong
+							}
+						}
+					}
+				}
+
+			}
+			if(!(changeRoute[0] == 999999 && changeRoute[1] == 999999)){
+				int firstIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress());
+				int lastIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress()) + changeStation[0].getAddress().length() + 1;/////////maybe wrong
+				int firstIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) + S.getAddress().length() + 1;
+				int lastIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress());/////////maybe wrong
+
+				if(G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) < G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress())){
+					String routeStr = (lastIn < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(firstIn,lastIn):G.getStationNameArrL().get(changeRoute[0]).substring(firstIn);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add((Address) G.getMap().get(routeLittle[ii]));
+					}
+				}else {
+					String routeStr = (firstIn2 < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2,firstIn2):G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add(0,(Address) G.getMap().get(routeLittle[ii]));
+					}
+				}
+
+
+				int firstIn_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress());
+				int lastIn_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(T.getAddress()) + T.getAddress().length() + 1;/////////maybe wrong
+				int firstIn2_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress()) + changeStation[0].getAddress().length() + 1;
+				int lastIn2_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(T.getAddress());/////////maybe wrong
+				int start_ = addresses.size();
+
+				if(G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress()) < G.getStationNameArrL().get(changeRoute[1]).indexOf(T.getAddress())){
+					String routeStr = (lastIn_ < G.getStationNameArrL().get(changeRoute[1]).length())?G.getStationNameArrL().get(changeRoute[1]).substring(firstIn_,lastIn_):G.getStationNameArrL().get(changeRoute[1]).substring(firstIn_);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length; ii++){
+						addresses.add((Address) G.getMap().get(routeLittle[ii]));
+					}
+				}else {
+					String routeStr = (firstIn2_ < G.getStationNameArrL().get(changeRoute[1]).length())?G.getStationNameArrL().get(changeRoute[1]).substring(lastIn2_,firstIn2_):G.getStationNameArrL().get(changeRoute[1]).substring(lastIn2_);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length; ii++){
+						addresses.add(start_,(Address) G.getMap().get(routeLittle[ii]));
+					}
+				}
+			}
+
+
+			if(changeRoute[0] == 999999 && changeRoute[1] == 999999){
+				time = 999999;
+				//换乘2次
+				for(int i = 0; i < G.getMatrixChangeLeastArrList().size(); i++){
+					for(int j = 0; j < G.getMatrixChangeLeastArrList().size(); j++){
+						for(int q = 0; q < G.getMatrixChangeLeastArrList().size(); q++){
+							int lineTmp = 0;
+							int timeTmp = 0;
+							int[] newLine = new int[G.getMatrixTogether().length];
+							int[] firstChangeStationIndex = new int[G.getMatrixTogether().length];
+							for(int o = 0; o < newLine.length; o++){
+								newLine[o] = 999999;
+							}
+							for(int l = 0; l < G.getMatrixTogether().length; l++){ //newline 的 index
+								for(int k = 0; k < G.getMatrixTogether().length; k++){
+									if(G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0)
+										lineTmp = 0;
+									else{
+										lineTmp = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][l];
+										if(lineTmp < newLine[l]){  ///////maybe wrong
+											newLine[l] = lineTmp;
+											firstChangeStationIndex[l] = k;
+										}
+									}
+								}
+								if(newLine[l] == 999999)
+									newLine[l] = 0;
+							}
+
+							for(int k = 0; k < G.getMatrixTogether().length; k++){
+								if(newLine[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][Tindex] == 0)
+									timeTmp = 0;
+								else {
+									timeTmp = newLine[k] + G.getMatrixChangeLeastArrList().get(q)[k][Tindex];
+									if(timeTmp < time){
+										time = timeTmp;
+										changeRoute[0] = i;
+										changeRoute[1] = j;//i号线转j号线转q号线
+										changeRoute[2] = q;
+										changeStation[0] = G.getVertexList().get(firstChangeStationIndex[k]);///////////maybe wrong
+										changeStation[1] = G.getVertexList().get(k);
+									}
+								}
+							}
+
+						}
+					}
+				}
+
+				int firstIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress());
+				int lastIn = G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress()) + changeStation[0].getAddress().length() + 1;/////////maybe wrong
+				int firstIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) + S.getAddress().length() + 1;
+				int lastIn2 = G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress());/////////maybe wrong
+
+				if(G.getStationNameArrL().get(changeRoute[0]).indexOf(S.getAddress()) < G.getStationNameArrL().get(changeRoute[0]).indexOf(changeStation[0].getAddress())){
+					String routeStr = (lastIn < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(firstIn,lastIn):G.getStationNameArrL().get(changeRoute[0]).substring(firstIn);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add((Address) G.getMap().get(routeLittle[ii]));
+					}
+				}else {
+					String routeStr = (firstIn2 < G.getStationNameArrL().get(changeRoute[0]).length())?G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2,firstIn2):G.getStationNameArrL().get(changeRoute[0]).substring(lastIn2);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add(0,(Address) G.getMap().get(routeLittle[ii]));
+					}
+				}
+
+
+				int firstIn_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress());
+				int lastIn_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[1].getAddress()) + changeStation[1].getAddress().length() + 1;/////////maybe wrong
+				int firstIn2_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress()) + changeStation[0].getAddress().length() + 1;
+				int lastIn2_ = G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[1].getAddress());/////////maybe wrong
+				int start_ = addresses.size();
+
+				if(G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[0].getAddress()) < G.getStationNameArrL().get(changeRoute[1]).indexOf(changeStation[1].getAddress())){
+					String routeStr = (lastIn_ < G.getStationNameArrL().get(changeRoute[1]).length())?G.getStationNameArrL().get(changeRoute[1]).substring(firstIn_,lastIn_):G.getStationNameArrL().get(changeRoute[1]).substring(firstIn_);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add((Address) G.getMap().get(routeLittle[ii]));
+					}
+				}else {
+					String routeStr = (firstIn2_ < G.getStationNameArrL().get(changeRoute[1]).length())?G.getStationNameArrL().get(changeRoute[1]).substring(lastIn2_,firstIn2_):G.getStationNameArrL().get(changeRoute[1]).substring(lastIn2_);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length-1; ii++){
+						addresses.add(start_,(Address) G.getMap().get(routeLittle[ii]));
+					}
+				}
+
+
+				int firstIn__ = G.getStationNameArrL().get(changeRoute[2]).indexOf(changeStation[1].getAddress());
+				int lastIn__ = G.getStationNameArrL().get(changeRoute[2]).indexOf(T.getAddress()) + T.getAddress().length() + 1;/////////maybe wrong
+				int firstIn2__ = G.getStationNameArrL().get(changeRoute[2]).indexOf(changeStation[1].getAddress()) + changeStation[1].getAddress().length() + 1;
+				int lastIn2__ = G.getStationNameArrL().get(changeRoute[2]).indexOf(T.getAddress());/////////maybe wrong
+				int start__ = addresses.size();
+
+				if(G.getStationNameArrL().get(changeRoute[2]).indexOf(changeStation[1].getAddress()) < G.getStationNameArrL().get(changeRoute[2]).indexOf(T.getAddress())){
+					String routeStr = (lastIn__ < G.getStationNameArrL().get(changeRoute[2]).length())?G.getStationNameArrL().get(changeRoute[2]).substring(firstIn__,lastIn__):G.getStationNameArrL().get(changeRoute[2]).substring(firstIn__);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length; ii++){
+						addresses.add((Address) G.getMap().get(routeLittle[ii]));
+					}
+				}else {
+					String routeStr = (firstIn2__ < G.getStationNameArrL().get(changeRoute[2]).length())?G.getStationNameArrL().get(changeRoute[2]).substring(lastIn2__,firstIn2__):G.getStationNameArrL().get(changeRoute[2]).substring(lastIn2__);
+					String[] routeLittle = routeStr.split("&");
+					for (int ii = 0; ii < routeLittle.length; ii++){
+						addresses.add(start__,(Address) G.getMap().get(routeLittle[ii]));
+					}
+				}
+//
+//				for (Address a : addresses){
+//					System.out.println(a.getAddress()+"???");
+//				}
+			}
+			if(changeRoute[0] == 999999){
+				addresses = null;
+			}
+		//	System.out.println((changeRoute[0]+1)+" "+(changeRoute[1]+1)+" "+(changeRoute[2]+1)+"换乘"+changeStation[0].getAddress()+" "+changeStation[1].getAddress());
+
+
+		}
+		T.setD(time);
+		return addresses;
+
+
+	}
 
 	public void BFS(Graph G, Address S){
 		S.setColor(1);//grey
@@ -593,8 +896,8 @@ public class IndexService
 		double lng2 = bAddress.getLongitude();
 		double radLat1 = rad(lat1);
 		double radLat2 = rad(lat2);
-		double a = rad(lat1) - rad(lat2);
-		double b = rad(lng1) - rad(lng2);
+		double a = rad(lat1) - rad(lat2); //纬度差
+		double b = rad(lng1) - rad(lng2); //经度差
 		double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
 				+ Math.cos(radLat1) * Math.cos(radLat2)
 				* Math.pow(Math.sin(b / 2), 2)));
@@ -602,5 +905,16 @@ public class IndexService
 		s = Math.round(s * 10000d) / 10000d;
 		s = s*1000;
 		return s;
+	}
+	private int[][] matrixAddAll(ArrayList<int[][]> matrixArrL ){
+		int[][] returnMatrix = new int[matrixArrL.get(0).length][matrixArrL.get(0).length];
+		for(int i = 0; i < matrixArrL.size(); i++){
+			for(int j = 0; j < matrixArrL.get(0).length; j++){
+				for (int k = 0; k < matrixArrL.get(0).length; k++){
+					returnMatrix[j][k] += matrixArrL.get(i)[j][k];
+				}
+			}
+		}
+		return returnMatrix;
 	}
 }

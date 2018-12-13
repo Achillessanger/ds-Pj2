@@ -1,6 +1,8 @@
 package com.fudan.sw.dsa.project2.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * for subway graph
@@ -11,8 +13,13 @@ public class Graph {
     private ArrayList<Address> vertexList;
     private ArrayList<ArrayList<Edge>> undergroundLines = new ArrayList<>();
     private ArrayList<ArrayList<Address>> vertxeUnion = new ArrayList<>();
-    int vertexNum = 0;
-    int edgeLength = 0;
+    private int vertexNum = 0;
+    private int edgeLength = 0;
+    private Map<String,Address> map = new HashMap<String, Address>();
+    private Map<String,Integer> mapMatrixIndex = new HashMap<String, Integer>();
+    private ArrayList<int[][]> matrixChangeLeastArrList = new ArrayList<>();
+    private int[][] matrixTogether;
+    private ArrayList<String> stationNameArrL = new ArrayList<>();
 
     public Graph(){
         vertexList = new ArrayList<Address>();
@@ -48,5 +55,35 @@ public class Graph {
         this.vertxeUnion = vertxeUnion;
     }
 
+    public Map getMap() {
+        return map;
+    }
 
+    public Map<String, Integer> getMapMatrixIndex() {
+        return mapMatrixIndex;
+    }
+
+    public int getVertexNum() {
+        return vertexNum;
+    }
+
+    public void setVertexNum(int vertexNum) {
+        this.vertexNum = vertexNum;
+    }
+
+    public ArrayList<int[][]> getMatrixChangeLeastArrList() {
+        return matrixChangeLeastArrList;
+    }
+
+    public int[][] getMatrixTogether() {
+        return matrixTogether;
+    }
+
+    public void setMatrixTogether(int[][] matrixTogether) {
+        this.matrixTogether = matrixTogether;
+    }
+
+    public ArrayList<String> getStationNameArrL() {
+        return stationNameArrL;
+    }
 }
