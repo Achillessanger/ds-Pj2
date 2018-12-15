@@ -20,6 +20,7 @@ public class Graph {
     private ArrayList<int[][]> matrixChangeLeastArrList = new ArrayList<>();
     private int[][] matrixTogether;
     private ArrayList<String> stationNameArrL = new ArrayList<>();
+    private ArrayList<Graph> routes = new ArrayList<>();
 
     public Graph(){
         vertexList = new ArrayList<Address>();
@@ -85,5 +86,9 @@ public class Graph {
 
     public ArrayList<String> getStationNameArrL() {
         return stationNameArrL;
+    }
+
+    public ArrayList<Graph> getRoutes() {
+        return routes;
     }
 }
