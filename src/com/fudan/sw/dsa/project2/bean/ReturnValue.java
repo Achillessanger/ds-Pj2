@@ -8,6 +8,8 @@ public class ReturnValue
 	List<Address>subwayList;
 	Address endPoint;
 	double minutes;
+	double distance1;
+	double distance2;
 	public Address getStartPoint() {
 		return startPoint;
 	}
@@ -31,5 +33,21 @@ public class ReturnValue
 	}
 	public void setMinutes(double minutes) {
 		this.minutes = minutes;
+	}
+
+	public double getDistance1() {
+		return distance1;
+	}
+
+	public void setDistance1(double distance1) {
+		this.distance1 = distance1;
+	}
+
+	public double getDistance2() {
+		return distance2;
+	}
+
+	public void setDistance2(double distance2) {
+		this.distance2 = distance2;
 	}
 }

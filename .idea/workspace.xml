@@ -7,12 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ca03b68-3069-445b-a09b-eb1fa8587cfc" name="Default Changelist" comment="case1,3完成">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/service/IndexService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/service/IndexService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/service/IndexService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/service/IndexService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/service/IndexService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,13 +24,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="764" column="17" selection-start-line="764" selection-start-column="17" selection-end-line="764" selection-end-column="17" />
+            <state relative-caret-position="356">
+              <caret line="527" column="45" selection-start-line="527" selection-start-column="45" selection-end-line="527" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#32155#32156#0" expanded="true" />
+                <element signature="e#32188#32189#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -40,8 +41,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/subway.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="29" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="29" />
+            <state relative-caret-position="179">
+              <caret line="118" column="5" selection-start-line="118" selection-end-line="118" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -58,14 +59,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Edge.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="343">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
               <folding>
+                <element signature="e#594#595#0" expanded="true" />
                 <element signature="e#627#628#0" expanded="true" />
                 <element signature="e#810#811#0" expanded="true" />
                 <element signature="e#847#848#0" expanded="true" />
                 <element signature="e#1015#1016#0" expanded="true" />
                 <element signature="e#1044#1045#0" expanded="true" />
+                <element signature="e#1256#1257#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,12 +77,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="915">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
+            <state relative-caret-position="415">
+              <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setUndergroundLines#0;class#Graph#0" />
-                <element signature="e#2450#2451#0" expanded="true" />
+                <element signature="e#2638#2639#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,16 +91,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="435">
+              <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
               <folding>
                 <element signature="e#208#209#0" expanded="true" />
                 <element signature="e#232#233#0" expanded="true" />
                 <element signature="e#281#282#0" expanded="true" />
                 <element signature="e#316#317#0" expanded="true" />
                 <element signature="e#435#436#0" expanded="true" />
+                <element signature="e#470#471#0" expanded="true" />
                 <element signature="e#569#570#0" expanded="true" />
                 <element signature="e#600#601#0" expanded="true" />
+                <element signature="e#816#817#0" expanded="true" />
+                <element signature="e#863#864#0" expanded="true" />
+                <element signature="e#896#897#0" expanded="true" />
+                <element signature="e#929#930#0" expanded="true" />
+                <element signature="e#952#953#0" expanded="true" />
+                <element signature="e#999#1000#0" expanded="true" />
+                <element signature="e#1032#1033#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -106,36 +117,49 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="62" selection-start-line="62" selection-end-line="62" />
+            <state relative-caret-position="378">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
+                <element signature="e#883#884#0" expanded="true" />
+                <element signature="e#910#911#0" expanded="true" />
                 <element signature="e#940#941#0" expanded="true" />
                 <element signature="e#961#962#0" expanded="true" />
                 <element signature="e#1318#1319#0" expanded="true" />
                 <element signature="e#1333#1334#0" expanded="true" />
                 <element signature="e#1363#1364#0" expanded="true" />
                 <element signature="e#1380#1381#0" expanded="true" />
+                <element signature="e#1406#1407#0" expanded="true" />
                 <element signature="e#1422#1423#0" expanded="true" />
                 <element signature="e#1516#1517#0" expanded="true" />
                 <element signature="e#1540#1541#0" expanded="true" />
                 <element signature="e#1661#1662#0" expanded="true" />
                 <element signature="e#1683#1684#0" expanded="true" />
-                <element signature="e#2111#2112#0" expanded="true" />
                 <element signature="e#2142#2143#0" expanded="true" />
                 <element signature="e#2542#2543#0" expanded="true" />
                 <element signature="e#2562#2563#0" expanded="true" />
                 <element signature="e#2615#2616#0" expanded="true" />
                 <element signature="e#2642#2643#0" expanded="true" />
+                <element signature="e#2764#2765#0" expanded="true" />
+                <element signature="e#2796#2797#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/index.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+            <state relative-caret-position="363">
+              <caret line="134" column="50" lean-forward="true" selection-start-line="134" selection-start-column="50" selection-end-line="134" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#6#0" expanded="true" />
+                <element signature="e#6#12#0" expanded="true" />
+                <element signature="e#14#20#0" expanded="true" />
+                <element signature="e#20#26#0" expanded="true" />
+                <element signature="e#6#12#0" expanded="true" />
+                <element signature="e#12#18#0" expanded="true" />
+                <element signature="e#19#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -160,7 +184,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>compareTo</find>
       <find>value</find>
       <find>龙溪路</find>
       <find>浦电</find>
@@ -189,6 +212,8 @@
       <find>vertexUnionRecord</find>
       <find>stationName</find>
       <find>张江高科</find>
+      <find>thisVertexHasLine</find>
+      <find>Line5</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,12 +227,13 @@
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/RBTree.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Edge.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/constant/FileGetter.java" />
-        <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java" />
         <option value="$PROJECT_DIR$/src/test.txt" />
         <option value="$PROJECT_DIR$/src/subway.txt" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" />
+        <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java" />
+        <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" />
       </list>
     </option>
   </component>
@@ -455,18 +481,18 @@
       <workItem from="1544617438867" duration="10476000" />
       <workItem from="1544673801321" duration="6265000" />
       <workItem from="1544707710706" duration="8271000" />
-      <workItem from="1544853020087" duration="658000" />
+      <workItem from="1544853020087" duration="10162000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117706000" />
+    <option name="totallyTimeSpent" value="127210000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="432" y="33" width="1229" height="937" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.054759897" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1853412" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -477,7 +503,7 @@
       <window_info id="Learn" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30177516" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30177516" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3964497" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -492,7 +518,7 @@
       <window_info anchor="bottom" id="Database Changes" order="14" />
       <window_info anchor="bottom" id="Version Control" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24936816" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Palette" order="4" />
@@ -514,24 +540,58 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
-          <line>623</line>
+          <line>247</line>
           <properties />
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
-          <line>701</line>
+          <line>230</line>
           <properties />
-          <option name="timeStamp" value="6" />
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
-          <line>760</line>
+          <line>213</line>
           <properties />
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
+          <line>143</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
+          <line>126</line>
+          <properties />
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
+          <line>108</line>
+          <properties />
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
+          <line>292</line>
+          <properties />
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
+          <line>636</line>
+          <properties />
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/config/WebConfig.java">
@@ -704,23 +764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="764" column="17" selection-start-line="764" selection-start-column="17" selection-end-line="764" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/subway.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="29" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -728,85 +771,127 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Edge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="343">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
           <folding>
+            <element signature="e#594#595#0" expanded="true" />
             <element signature="e#627#628#0" expanded="true" />
             <element signature="e#810#811#0" expanded="true" />
             <element signature="e#847#848#0" expanded="true" />
             <element signature="e#1015#1016#0" expanded="true" />
             <element signature="e#1044#1045#0" expanded="true" />
+            <element signature="e#1256#1257#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        <state relative-caret-position="415">
+          <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setUndergroundLines#0;class#Graph#0" />
-            <element signature="e#2450#2451#0" expanded="true" />
+            <element signature="e#2638#2639#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java">
+    <entry file="file://$PROJECT_DIR$/src/subway.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="179">
+          <caret line="118" column="5" selection-start-line="118" selection-end-line="118" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="527" column="45" selection-start-line="527" selection-start-column="45" selection-end-line="527" selection-end-column="45" />
           <folding>
-            <element signature="e#208#209#0" expanded="true" />
-            <element signature="e#232#233#0" expanded="true" />
-            <element signature="e#281#282#0" expanded="true" />
-            <element signature="e#316#317#0" expanded="true" />
-            <element signature="e#435#436#0" expanded="true" />
-            <element signature="e#569#570#0" expanded="true" />
-            <element signature="e#600#601#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#32155#32156#0" expanded="true" />
+            <element signature="e#32188#32189#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
+        <state relative-caret-position="378">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
           <folding>
+            <element signature="e#883#884#0" expanded="true" />
+            <element signature="e#910#911#0" expanded="true" />
             <element signature="e#940#941#0" expanded="true" />
             <element signature="e#961#962#0" expanded="true" />
             <element signature="e#1318#1319#0" expanded="true" />
             <element signature="e#1333#1334#0" expanded="true" />
             <element signature="e#1363#1364#0" expanded="true" />
             <element signature="e#1380#1381#0" expanded="true" />
+            <element signature="e#1406#1407#0" expanded="true" />
             <element signature="e#1422#1423#0" expanded="true" />
             <element signature="e#1516#1517#0" expanded="true" />
             <element signature="e#1540#1541#0" expanded="true" />
             <element signature="e#1661#1662#0" expanded="true" />
             <element signature="e#1683#1684#0" expanded="true" />
-            <element signature="e#2111#2112#0" expanded="true" />
             <element signature="e#2142#2143#0" expanded="true" />
             <element signature="e#2542#2543#0" expanded="true" />
             <element signature="e#2562#2563#0" expanded="true" />
             <element signature="e#2615#2616#0" expanded="true" />
             <element signature="e#2642#2643#0" expanded="true" />
+            <element signature="e#2764#2765#0" expanded="true" />
+            <element signature="e#2796#2797#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
+          <folding>
+            <element signature="e#208#209#0" expanded="true" />
+            <element signature="e#232#233#0" expanded="true" />
+            <element signature="e#281#282#0" expanded="true" />
+            <element signature="e#316#317#0" expanded="true" />
+            <element signature="e#435#436#0" expanded="true" />
+            <element signature="e#470#471#0" expanded="true" />
+            <element signature="e#569#570#0" expanded="true" />
+            <element signature="e#600#601#0" expanded="true" />
+            <element signature="e#816#817#0" expanded="true" />
+            <element signature="e#863#864#0" expanded="true" />
+            <element signature="e#896#897#0" expanded="true" />
+            <element signature="e#929#930#0" expanded="true" />
+            <element signature="e#952#953#0" expanded="true" />
+            <element signature="e#999#1000#0" expanded="true" />
+            <element signature="e#1032#1033#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/index.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        <state relative-caret-position="363">
+          <caret line="134" column="50" lean-forward="true" selection-start-line="134" selection-start-column="50" selection-end-line="134" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#6#0" expanded="true" />
+            <element signature="e#6#12#0" expanded="true" />
+            <element signature="e#14#20#0" expanded="true" />
+            <element signature="e#20#26#0" expanded="true" />
+            <element signature="e#6#12#0" expanded="true" />
+            <element signature="e#12#18#0" expanded="true" />
+            <element signature="e#19#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

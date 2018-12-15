@@ -136,7 +136,9 @@
                 for (let i = 0; i < len; ++i)
                     str += "&nbsp;&nbsp;->&nbsp;&nbsp;" + data.subwayList[i].address;
                 str += "&nbsp;&nbsp;->&nbsp;&nbsp;" + data.endPoint.address + "<br/>";
-                str += "花费时间为:&nbsp;&nbsp; " + data.minutes + "&nbsp;分钟";
+                str += "花费时间为:&nbsp;&nbsp; " + data.minutes + "&nbsp;分钟" + "<br/>";
+                str += "步行至站点： " + data.distance1 + " 米" + "<br/>";
+				str += "步行至终点： " + data.distance2 + " 米" + "<br/>";
                 $("#resultDiv").html(str);
             },
             error: function (data) {

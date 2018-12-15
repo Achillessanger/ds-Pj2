@@ -24,6 +24,7 @@ public class Address
 	private int color = 0; //white
 	private int changeTimes = 999999;
 	private ArrayList<Address> piList;
+	private ArrayList<Integer> linesInThisStation = new ArrayList<>();
 
 
 	public Address(String address,String longitude,String latitude)
@@ -114,6 +115,10 @@ public class Address
 
 	public void setPiList(ArrayList<Address> piList) {
 		this.piList = piList;
+	}
+
+	public ArrayList<Integer> getLinesInThisStation() {
+		return linesInThisStation;
 	}
 }
 

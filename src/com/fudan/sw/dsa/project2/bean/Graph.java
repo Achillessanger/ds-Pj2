@@ -21,6 +21,7 @@ public class Graph {
     private int[][] matrixTogether;
     private ArrayList<String> stationNameArrL = new ArrayList<>();
     private ArrayList<Graph> routes = new ArrayList<>();
+    private Map<Integer,ArrayList<Integer>> relationLinesMap = new HashMap<>();
 
     public Graph(){
         vertexList = new ArrayList<Address>();
@@ -90,5 +91,9 @@ public class Graph {
 
     public ArrayList<Graph> getRoutes() {
         return routes;
+    }
+
+    public Map<Integer, ArrayList<Integer>> getRelationLinesMap() {
+        return relationLinesMap;
     }
 }
