@@ -8,11 +8,12 @@
 		body, html, #allmap {
 			width: 100%;
 			height: 100%;
-			overflow: hidden;
+			overflow: scroll;
 			margin: 0;
 			font-family: "微软雅黑";
 		}
 	</style>
+
 	<script type="text/javascript"
 			src="http://api.map.baidu.com/api?v=2.0&ak=EuQZy4q2kFskzCIImsMvnvwtHkkyEzAd"></script>
 	<title>地图展示</title>
@@ -49,6 +50,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     // 百度地图API功能
+	var rightclick = 0;
     var map = new BMap.Map("allmap");    // 创建Map实例
     map.centerAndZoom("上海", 16);  // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
@@ -89,11 +91,77 @@
         var markerMenuEnd = new BMap.ContextMenu();
         markerMenu.addItem(new BMap.MenuItem('设为终点', EventEndMarker.bind(map)));
         map.addContextMenu(markerMenuEnd);
+        rightclick = 1;
+    }
+
+
+
+    function clickButton() {
+        if(rightclick == 1){
+            clickButton2();
+		}else {
+            var start = document.getElementById("startAddress").value;
+            var end = document.getElementById("endAddress").value;
+            // alert(start+" "+end)
+
+            if(start.length <= 0){
+                alert("请输入起点");
+                document.getElementById("startAddress").focus();
+                return;
+            }
+
+            if(end.length <= 0){
+                alert("请输入终点");
+                document.getElementById("endAddress").focus();
+                return;
+            }
+
+            var options = {
+                onSearchComplete: function(results){
+                    if (local.getStatus() == BMAP_STATUS_SUCCESS){
+                        // 判断状态是否正确
+                        document.getElementById("hiddenStartLongitude").value = results.getPoi(0).point.lng;
+                        document.getElementById("hiddenStartLatitude").value = results.getPoi(0).point.lat;
+                        local2.search(end)
+                    }
+                }
+            };
+            var options2 = {
+                onSearchComplete: function(results){
+                    if (local2.getStatus() == BMAP_STATUS_SUCCESS){
+                        // 判断状态是否正确
+                        document.getElementById("hiddenEndLongitude").value = results.getPoi(0).point.lng;
+                        document.getElementById("hiddenEndLatitude").value = results.getPoi(0).point.lat;
+                        if(start == "复旦大学张江校区"){
+                            document.getElementById("hiddenStartLongitude").value = 121.604569;
+                            document.getElementById("hiddenStartLatitude").value = 31.196348;
+                        }
+                        if(end == "人民广场"){
+                            document.getElementById("hiddenEndLongitude").value = 121.478941;
+                            document.getElementById("hiddenEndLatitude").value = 31.236009;
+                        }
+                        // alert("1")
+                        clickButton2();
+                    }
+                }
+            };
+
+            var local = new BMap.LocalSearch(map, options);
+            var local2 = new BMap.LocalSearch(map, options2);
+            local.search(start);
+		}
+        rightclick = 0;
+
+
     }
 
     //提交按钮的点击事件
-    function clickButton() {
+    function clickButton2() {
         //请在这里检查数据
+
+        // var local = new BMap.LocalSearch(map,{renderOptions:{map:map},pageCapacity:1})
+        // local.search("复旦大学");
+
 
         var baseUrl = $("#hiddenBaseUrl").val();
         $.ajax({
@@ -140,9 +208,9 @@
                 if(data.distance2 != 0.1){
                     str += "步行至站点： " + data.distance1 + " 米" + "<br/>";
                     str += "步行至终点： " + data.distance2 + " 米" + "<br/>";
-				}else {
+                }else {
                     str += "直接步行距离： " + data.distance1 + " 米" + "<br/>";
-				}
+                }
 
                 $("#resultDiv").html(str);
             },

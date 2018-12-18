@@ -9,16 +9,7 @@
     <list default="true" id="4ca03b68-3069-445b-a09b-eb1fa8587cfc" name="Default Changelist" comment="case1,3完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/RBTree$RBTNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/bean/RBTree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/service/IndexService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/com/fudan/sw/dsa/project2/service/IndexService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/Graph.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/Graph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/RBTree$RBTNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/bean/RBTree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/service/IndexService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/classes/com/fudan/sw/dsa/project2/service/IndexService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/index.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Project2_war_exploded/WEB-INF/index.ftl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/build/classes/" />
@@ -30,25 +21,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
+            <state relative-caret-position="603">
               <caret line="572" column="13" selection-start-line="572" selection-start-column="13" selection-end-line="572" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#32677#32678#0" expanded="true" />
-                <element signature="e#32710#32711#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-4.3.7.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="123" selection-start-line="123" selection-end-line="123" />
             </state>
           </provider>
         </entry>
@@ -83,7 +63,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
+            <state relative-caret-position="525">
               <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -119,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
+            <state relative-caret-position="585">
               <caret line="45" selection-start-line="45" selection-end-line="45" />
               <folding>
                 <element signature="e#1155#1156#0" expanded="true" />
@@ -150,12 +130,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/index.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="143" column="72" selection-start-line="143" selection-start-column="72" selection-end-line="143" selection-end-column="72" />
+            <state relative-caret-position="371">
+              <caret line="150" column="32" lean-forward="true" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="32" />
               <folding>
+                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#1047#1053#0#HTML" expanded="true" />
+                <element signature="e#1053#1059#0#HTML" expanded="true" />
+                <element signature="e#1059#1065#0#HTML" expanded="true" />
+                <element signature="e#1298#1304#0#HTML" expanded="true" />
+                <element signature="e#1304#1310#0#HTML" expanded="true" />
+                <element signature="e#1310#1316#0#HTML" expanded="true" />
+                <element signature="e#1537#1543#0#HTML" expanded="true" />
+                <element signature="e#1543#1549#0#HTML" expanded="true" />
+                <element signature="e#1549#1555#0#HTML" expanded="true" />
+                <element signature="e#1611#1617#0#HTML" expanded="true" />
+                <element signature="e#1617#1623#0#HTML" expanded="true" />
+                <element signature="e#1623#1629#0#HTML" expanded="true" />
+                <element signature="e#1685#1691#0#HTML" expanded="true" />
+                <element signature="e#1691#1697#0#HTML" expanded="true" />
+                <element signature="e#1697#1703#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#input#9;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#0#6#0" expanded="true" />
                 <element signature="e#6#12#0" expanded="true" />
@@ -189,8 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>value</find>
-      <find>龙溪路</find>
       <find>浦电</find>
       <find>虹桥2号航站楼</find>
       <find>花桥</find>
@@ -219,6 +219,8 @@
       <find>张江高科</find>
       <find>thisVertexHasLine</find>
       <find>Line5</find>
+      <find>style</find>
+      <find>overflow</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -238,8 +240,8 @@
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/ReturnValue.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Relations.java" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" />
         <option value="$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/index.ftl" />
       </list>
     </option>
   </component>
@@ -251,8 +253,8 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="161" />
-    <option name="y" value="32" />
+    <option name="x" value="215" />
+    <option name="y" value="130" />
     <option name="width" value="1229" />
     <option name="height" value="937" />
   </component>
@@ -491,17 +493,19 @@
       <workItem from="1545033465356" duration="3497000" />
       <workItem from="1545051764998" duration="5854000" />
       <workItem from="1545109457376" duration="1098000" />
+      <workItem from="1545112877520" duration="7522000" />
+      <workItem from="1545126230831" duration="2724000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138631000" />
+    <option name="totallyTimeSpent" value="148877000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="161" y="32" width="1229" height="937" extended-state="0" />
+    <frame x="215" y="130" width="1229" height="937" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19292334" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19966301" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -512,7 +516,7 @@
       <window_info id="Learn" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30177516" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19526628" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3964497" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -564,12 +568,6 @@
           <line>505</line>
           <properties />
           <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
-          <line>547</line>
-          <properties />
-          <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java</url>
@@ -793,43 +791,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Relations.java">
+    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+        <state relative-caret-position="525">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
           <folding>
-            <element signature="e#584#585#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-4.3.7.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="123" selection-start-line="123" selection-end-line="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/index.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="143" column="72" selection-start-line="143" selection-start-column="72" selection-end-line="143" selection-end-column="72" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#0#6#0" expanded="true" />
-            <element signature="e#6#12#0" expanded="true" />
-            <element signature="e#14#20#0" expanded="true" />
-            <element signature="e#20#26#0" expanded="true" />
-            <element signature="e#6#12#0" expanded="true" />
-            <element signature="e#12#18#0" expanded="true" />
-            <element signature="e#19#25#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1299#1300#0" expanded="true" />
+            <element signature="method#setUndergroundLines#0;class#Graph#0" />
+            <element signature="e#2788#2789#0" expanded="true" />
+            <element signature="e#2832#2833#0" expanded="true" />
+            <element signature="e#3016#3017#0" expanded="true" />
+            <element signature="e#3041#3042#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -850,25 +823,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Graph.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="75">
+          <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-4.3.7.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="572" column="13" selection-start-line="572" selection-start-column="13" selection-end-line="572" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1299#1300#0" expanded="true" />
-            <element signature="method#setUndergroundLines#0;class#Graph#0" />
-            <element signature="e#2788#2789#0" expanded="true" />
-            <element signature="e#2832#2833#0" expanded="true" />
-            <element signature="e#3016#3017#0" expanded="true" />
-            <element signature="e#3041#3042#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Relations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
+          <folding>
+            <element signature="e#584#585#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/bean/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
+        <state relative-caret-position="585">
           <caret line="45" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="e#1155#1156#0" expanded="true" />
@@ -886,14 +877,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/fudan/sw/dsa/project2/service/IndexService.java">
+    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/index.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="572" column="13" selection-start-line="572" selection-start-column="13" selection-end-line="572" selection-end-column="13" />
+        <state relative-caret-position="371">
+          <caret line="150" column="32" lean-forward="true" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#32677#32678#0" expanded="true" />
-            <element signature="e#32710#32711#0" expanded="true" />
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#1047#1053#0#HTML" expanded="true" />
+            <element signature="e#1053#1059#0#HTML" expanded="true" />
+            <element signature="e#1059#1065#0#HTML" expanded="true" />
+            <element signature="e#1298#1304#0#HTML" expanded="true" />
+            <element signature="e#1304#1310#0#HTML" expanded="true" />
+            <element signature="e#1310#1316#0#HTML" expanded="true" />
+            <element signature="e#1537#1543#0#HTML" expanded="true" />
+            <element signature="e#1543#1549#0#HTML" expanded="true" />
+            <element signature="e#1549#1555#0#HTML" expanded="true" />
+            <element signature="e#1611#1617#0#HTML" expanded="true" />
+            <element signature="e#1617#1623#0#HTML" expanded="true" />
+            <element signature="e#1623#1629#0#HTML" expanded="true" />
+            <element signature="e#1685#1691#0#HTML" expanded="true" />
+            <element signature="e#1691#1697#0#HTML" expanded="true" />
+            <element signature="e#1697#1703#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#input#9;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#0#6#0" expanded="true" />
+            <element signature="e#6#12#0" expanded="true" />
+            <element signature="e#14#20#0" expanded="true" />
+            <element signature="e#20#26#0" expanded="true" />
+            <element signature="e#6#12#0" expanded="true" />
+            <element signature="e#12#18#0" expanded="true" />
+            <element signature="e#19#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
