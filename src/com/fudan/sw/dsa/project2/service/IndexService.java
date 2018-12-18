@@ -453,10 +453,16 @@ public class IndexService
 				if(getDistance(startPoint,address) < minDistance1){
 					startVertex = address;
 					minDistance1 = getDistance(startPoint,address);
+					if(minDistance1 < 10){
+						int debug = 0;
+					}
 				}
 				if(getDistance(endPoint,address) < minDisrance2){
 					endVertex = address;
 					minDisrance2 = getDistance(endPoint,address);
+					if(minDisrance2 < 10){
+						int debug = 0;
+					}
 				}
 
 			}
@@ -547,16 +553,25 @@ public class IndexService
 			}
 			addresses.remove(0);
 			time = (int)endPoint.getD() ;
-			minDisrance2 = getDistance(addresses.get(addresses.size()-1),endPoint);//addresses.get(1).getFromEdge().getWeight();
-			minDistance1 = getDistance(startPoint,addresses.get(0));//endPoint.getFromEdge().getWeight();////////////////
+
+			try{
+				minDisrance2 = getDistance(addresses.get(addresses.size()-1),endPoint);//addresses.get(1).getFromEdge().getWeight();
+				minDistance1 = getDistance(startPoint,addresses.get(0));//endPoint.getFromEdge().getWeight();////////////////
+
+				System.out.println("距离1："+minDistance1);
+				System.out.println("距离2："+minDisrance2);
+			}catch (Exception exception){
+				minDistance1 = getDistance(startPoint,endPoint);
+				minDisrance2 = 0.1;
+				System.out.println("直接步行距离：" + minDistance1);
+			}
 			graph.getVertexList().remove(startPoint);
 			graph.getVertexList().remove(endPoint);
 			for(Address address : graph.getVertexList()){
 				address.getEdgesAfter().remove(0);
 
 			}
-			System.out.println("距离1："+minDistance1);
-			System.out.println("距离2："+minDisrance2);
+
 			break;
 		default:
 			break;

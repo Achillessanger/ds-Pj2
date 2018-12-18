@@ -37,10 +37,10 @@
 			   onclick="clickButton()">
 	</form>
 	<br/>
-	<div style="position:absolute;top:40%;width: 20%;height: 60%">
+	<div style="position:absolute;top:30%;width: 20%;height: 60%">
 		<span style="font-size:18px;position:relative;">display the result:</span><br/>
 		<div id="resultDiv"
-			 style="background-color:#F5F5F5;width: 90%;height:90%;font-size:18px;word-wrap: break-word; ">
+			 style="background-color:#F5F5F5;width: 90%;height:100%;font-size:18px;word-wrap: break-word; ">
 
 		</div>
 	</div>
@@ -137,8 +137,13 @@
                     str += "&nbsp;&nbsp;->&nbsp;&nbsp;" + data.subwayList[i].address;
                 str += "&nbsp;&nbsp;->&nbsp;&nbsp;" + data.endPoint.address + "<br/>";
                 str += "花费时间为:&nbsp;&nbsp; " + data.minutes + "&nbsp;分钟" + "<br/>";
-                str += "步行至站点： " + data.distance1 + " 米" + "<br/>";
-				str += "步行至终点： " + data.distance2 + " 米" + "<br/>";
+                if(data.distance2 != 0.1){
+                    str += "步行至站点： " + data.distance1 + " 米" + "<br/>";
+                    str += "步行至终点： " + data.distance2 + " 米" + "<br/>";
+				}else {
+                    str += "直接步行距离： " + data.distance1 + " 米" + "<br/>";
+				}
+
                 $("#resultDiv").html(str);
             },
             error: function (data) {
