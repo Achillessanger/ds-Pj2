@@ -339,9 +339,9 @@ public class IndexService
 //					System.out.println(debug.get);
 //
 //				}
-				for(Address a : graph.getVertexList()){
-					System.out.println(a.getAddress()+a.getLinesInThisStation().size());
-				}
+//				for(Address a : graph.getVertexList()){
+//					System.out.println(a.getAddress()+a.getLinesInThisStation().size());
+//				}
 
 				//=====================================================================
 
@@ -374,6 +374,39 @@ public class IndexService
 				}
 				graph.setMatrixTogether(matrixAddAll(graph.getMatrixChangeLeastArrList()));
 
+
+
+
+				//最小换乘矩阵
+//				for(int i = 0; i < 17; i++){ //只算地铁的话是只有17
+//					int[][] matrix = new int[graph.getVertexNum()][graph.getVertexNum()];
+//					for(Address address : graph.getVertxeUnion().get(i)){
+//						for(Address relation : graph.getVertxeUnion().get(i)){
+//							matrix[graph.getMapMatrixIndex().get(address.getAddress())][graph.getMapMatrixIndex().get(relation.getAddress())] = 1;
+//						}
+//					}
+//
+//					graph.getZuiXiaoHuanChangMatrix().add(matrix);
+//				}
+//				graph.setZuiXiaoHuanChengCiShu(makeMatrix(graph.getZuiXiaoHuanChangMatrix()));
+//
+//				//test==================
+//				for(int i = 0; i < graph.getZuiXiaoHuanChengCiShu().length; i++){
+//					for(int j = 0; j < graph.getZuiXiaoHuanChengCiShu().length; j++){
+//						System.out.print(" "+ graph.getZuiXiaoHuanChengCiShu()[i][j]);
+//					}
+//					System.out.println();
+//				}
+//				for(int i = 0; i < 17; i++){
+//					Relations relations = new Relations(i);
+//					graph.getRe().add(relations);
+//				}
+//				for(int i = 0; i < 17; i++){
+//					for(int re : graph.getRelationLinesMap().get(i)){
+//						graph.getRe().get(i).getReArrList().add(graph.getRe().get(i));
+//					}
+//				}
+				graph.setZuiXiaoHuanChengCiShu(BFS(graph));
 			}
 			catch (Exception e) 
 			{
@@ -460,7 +493,17 @@ public class IndexService
 
 			}
 
-			addresses = findCase2Route(graph,startVertex2,endVertex2);
+			int ttt = 9;
+			for (int a : startVertex2.getLinesInThisStation()){
+				for(int b : endVertex2.getLinesInThisStation()){
+					if(graph.getZuiXiaoHuanChengCiShu()[a][b] < ttt){
+						ttt = graph.getZuiXiaoHuanChengCiShu()[a][b];
+					}
+
+				}
+			}
+
+			addresses = findCase2Route(graph,startVertex2,endVertex2,ttt);
 //			findCase2Route(graph,startVertex2,endVertex2);
 //			Address tmp2 = endVertex2;
 //			while (tmp2 != null){
@@ -566,7 +609,7 @@ public class IndexService
 	}
 
 
-	public List<Address> findCase2Route(Graph G, Address S, Address T){
+	public List<Address> findCase2Route(Graph G, Address S, Address T,int timesForChange){
 		List<Address> addresses=new ArrayList<Address>();
 		Address tmp;
 		double time = 999999;
@@ -574,10 +617,9 @@ public class IndexService
 		Address[] changeStation = new Address[3];
 		int Sindex = G.getMapMatrixIndex().get(S.getAddress());
 		int Tindex = G.getMapMatrixIndex().get(T.getAddress());
-		if(G.getMatrixTogether()[Sindex][Tindex] > 0){ //直接可以到达
+		if(timesForChange == 0){ //直接可以到达
 			for(int[][] m : G.getMatrixChangeLeastArrList()){
 				if(m[Sindex][Tindex] > 0){
-					//G.getMatrixChangeLeastArrList().indexOf(m)
 					if(time > m[Sindex][Tindex]){
 						time = m[Sindex][Tindex];
 						changeRoute[0] = G.getMatrixChangeLeastArrList().indexOf(m);
@@ -591,19 +633,21 @@ public class IndexService
 				addresses.add(0,tmp);
 				tmp = tmp.getPi();
 			}
-
-		}else{
+			return addresses;
+		}
+		if(timesForChange == 1) {
 			//转乘1次
-			for(int i : S.getLinesInThisStation()){
-				for(int j : T.getLinesInThisStation()){
+			time = 999999;
+			for (int i : S.getLinesInThisStation()) {
+				for (int j : T.getLinesInThisStation()) {
 					//换乘1次
 					int timeTmp = 0;
-					for(int k = 0; k < G.getMatrixTogether().length; k++){
-						if(G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][Tindex] == 0)
+					for (int k = 0; k < G.getMatrixTogether().length; k++) {
+						if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][Tindex] == 0)
 							timeTmp = 0;
 						else {
 							timeTmp = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][Tindex];
-							if(timeTmp < time){
+							if (timeTmp < time) {
 								time = timeTmp;
 								changeRoute[0] = i;
 								changeRoute[1] = j;//i号线转j号线
@@ -614,210 +658,215 @@ public class IndexService
 				}
 
 			}
-			if(!(changeRoute[0] == 999999 && changeRoute[1] == 999999)){
-				dijkstra(G.getRoutes().get(changeRoute[0]),S,changeStation[0]);
-				tmp = changeStation[0];
-				while (tmp != null){
-					addresses.add(0,tmp);
-					tmp = tmp.getPi();
-				}
-				int start = addresses.size();
-				dijkstra(G.getRoutes().get(changeRoute[1]),changeStation[0],T);
-				tmp = T;
-				while (tmp != changeStation[0]){
-					addresses.add(start,tmp);
-					 tmp = tmp.getPi();
+
+			dijkstra(G.getRoutes().get(changeRoute[0]), S, changeStation[0]);
+			tmp = changeStation[0];
+			while (tmp != null) {
+				addresses.add(0, tmp);
+				tmp = tmp.getPi();
+			}
+			int start = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[1]), changeStation[0], T);
+			tmp = T;
+			while (tmp != changeStation[0]) {
+				addresses.add(start, tmp);
+				tmp = tmp.getPi();
+			}
+			return addresses;
+
+		}
+
+		if(timesForChange == 2) {
+			time = 999999;
+			//换乘2次
+			for (int i : S.getLinesInThisStation()) {//int i = 0; i < G.getMatrixChangeLeastArrList().size(); i++
+				for (int j : G.getRelationLinesMap().get(i)) { //与i号线有关系的线！！！！！！！！！！！int j = 0; j < G.getMatrixChangeLeastArrList().size(); j++
+					if (T.getLinesInThisStation().contains(j))//////////////////////////////////////////?????????
+						continue;
+					for (int q : T.getLinesInThisStation()) {//int q = 0; q < G.getMatrixChangeLeastArrList().size(); q++
+						int lineTmp = 0;
+						int timeTmp = 0;
+						int[] newLine = new int[G.getMatrixTogether().length];
+						int[] firstChangeStationIndex = new int[G.getMatrixTogether().length];
+						for (int o = 0; o < newLine.length; o++) {
+							newLine[o] = 999999;
+						}
+						for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
+							for (int k = 0; k < G.getMatrixTogether().length; k++) {
+								if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0)
+									lineTmp = 0;
+								else {
+									lineTmp = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][l];
+									if (lineTmp < newLine[l]) {  ///////maybe wrong
+										newLine[l] = lineTmp;
+										firstChangeStationIndex[l] = k;
+									}
+								}
+							}
+							if (newLine[l] == 999999)
+								newLine[l] = 0;
+						}
+
+						for (int k = 0; k < G.getMatrixTogether().length; k++) {
+							if (newLine[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][Tindex] == 0)
+								timeTmp = 0;
+							else {
+								timeTmp = newLine[k] + G.getMatrixChangeLeastArrList().get(q)[k][Tindex];
+								if (timeTmp < time) {
+									time = timeTmp;
+									changeRoute[0] = i;
+									changeRoute[1] = j;//i号线转j号线转q号线
+									changeRoute[2] = q;
+									changeStation[0] = G.getVertexList().get(firstChangeStationIndex[k]);///////////maybe wrong
+									changeStation[1] = G.getVertexList().get(k);
+								}
+							}
+						}
+
+					}
 				}
 			}
 
-			if(changeRoute[0] == 999999 && changeRoute[1] == 999999){
-				time = 999999;
-				//换乘2次
-				for(int i : S.getLinesInThisStation()){//int i = 0; i < G.getMatrixChangeLeastArrList().size(); i++
-					for(int j : G.getRelationLinesMap().get(i)){ //与i号线有关系的线！！！！！！！！！！！int j = 0; j < G.getMatrixChangeLeastArrList().size(); j++
-						if(T.getLinesInThisStation().contains(j))//////////////////////////////////////////?????????
+			dijkstra(G.getRoutes().get(changeRoute[0]), S, changeStation[0]);
+			tmp = changeStation[0];
+			while (tmp != null) {
+				addresses.add(0, tmp);
+				tmp = tmp.getPi();
+			}
+			int start = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[1]), changeStation[0], changeStation[1]);
+			tmp = changeStation[1];
+			while (tmp != changeStation[0]) {
+				addresses.add(start, tmp);
+				tmp = tmp.getPi();
+			}
+			int start_ = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[2]), changeStation[1], T);
+			tmp = T;
+			while (tmp != changeStation[1]) {
+				addresses.add(start_, tmp);
+				tmp = tmp.getPi();
+			}
+			return addresses;
+
+		}
+
+		if(timesForChange == 3) {    //换乘3次
+			time = 999999;
+
+			for (int i : S.getLinesInThisStation()) {
+				for (int j : G.getRelationLinesMap().get(i)) {
+					if (T.getLinesInThisStation().contains(j))
+						continue;
+					for (int q : G.getRelationLinesMap().get(j)) {
+						if (T.getLinesInThisStation().contains(q) || q == i)
 							continue;
-						for(int q : T.getLinesInThisStation()){//int q = 0; q < G.getMatrixChangeLeastArrList().size(); q++
-							int lineTmp = 0;
-							int timeTmp = 0;
-							int[] newLine = new int[G.getMatrixTogether().length];
-							int[] firstChangeStationIndex = new int[G.getMatrixTogether().length];
-							for(int o = 0; o < newLine.length; o++){
-								newLine[o] = 999999;
+						for (int p : T.getLinesInThisStation()) {
+							int[] newLine1 = new int[G.getMatrixTogether().length];
+							int[] newLine2 = new int[G.getMatrixTogether().length];
+							int[] firstChangeStationIndex1 = new int[G.getMatrixTogether().length];
+							int[] firstChangeStationIndex2 = new int[G.getMatrixTogether().length];
+
+							for (int o = 0; o < newLine1.length; o++) {
+								newLine1[o] = 999999;
+								newLine2[o] = 999999;
 							}
-							for(int l = 0; l < G.getMatrixTogether().length; l++){ //newline 的 index
-								for(int k = 0; k < G.getMatrixTogether().length; k++){
-									if(G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0)
-										lineTmp = 0;
-									else{
-										lineTmp = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][l];
-										if(lineTmp < newLine[l]){  ///////maybe wrong
-											newLine[l] = lineTmp;
-											firstChangeStationIndex[l] = k;
+
+							for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
+								for (int k = 0; k < G.getMatrixTogether().length; k++) {
+									if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0) {
+
+									} else {
+										int newTmp1 = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][l];
+										if (newLine1[l] > newTmp1) {
+											newLine1[l] = newTmp1;
+											firstChangeStationIndex1[l] = k;
 										}
 									}
 								}
-								if(newLine[l] == 999999)
-									newLine[l] = 0;
+								if (newLine1[l] == 999999)
+									newLine1[l] = 0;
 							}
 
-							for(int k = 0; k < G.getMatrixTogether().length; k++){
-								if(newLine[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][Tindex] == 0)
-									timeTmp = 0;
-								else {
-									timeTmp = newLine[k] + G.getMatrixChangeLeastArrList().get(q)[k][Tindex];
-									if(timeTmp < time){
+							for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
+								for (int k = 0; k < G.getMatrixTogether().length; k++) {
+									if (newLine1[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][l] == 0) {
+
+									} else {
+										int newTmp2 = newLine1[k] + G.getMatrixChangeLeastArrList().get(q)[k][l];
+										if (newLine2[l] > newTmp2) {
+											newLine2[l] = newTmp2;
+											firstChangeStationIndex2[l] = k;
+										}
+									}
+								}
+								if (newLine2[l] == 999999)
+									newLine2[l] = 0;
+							}
+
+
+							for (int k = 0; k < G.getMatrixTogether().length; k++) {
+								if (newLine2[k] == 0 || G.getMatrixChangeLeastArrList().get(p)[k][Tindex] == 0) {
+
+								} else {
+									int timeTmp = newLine2[k] + G.getMatrixChangeLeastArrList().get(p)[k][Tindex];
+									if (timeTmp < time) {
 										time = timeTmp;
 										changeRoute[0] = i;
-										changeRoute[1] = j;//i号线转j号线转q号线
+										changeRoute[1] = j;
 										changeRoute[2] = q;
-										changeStation[0] = G.getVertexList().get(firstChangeStationIndex[k]);///////////maybe wrong
-										changeStation[1] = G.getVertexList().get(k);
-									}
-								}
-							}
-
-						}
-					}
-				}
-				if(changeRoute[0] != 999999){
-					dijkstra(G.getRoutes().get(changeRoute[0]),S,changeStation[0]);
-					tmp = changeStation[0];
-					while (tmp != null){
-						addresses.add(0,tmp);
-						tmp = tmp.getPi();
-					}
-					int start = addresses.size();
-					dijkstra(G.getRoutes().get(changeRoute[1]),changeStation[0],changeStation[1]);
-					tmp = changeStation[1];
-					while (tmp != changeStation[0]){
-						addresses.add(start,tmp);
-						tmp = tmp.getPi();
-					}
-					int start_ = addresses.size();
-					dijkstra(G.getRoutes().get(changeRoute[2]),changeStation[1],T);
-					tmp = T;
-					while (tmp != changeStation[1]){
-						addresses.add(start_,tmp);
-						tmp = tmp.getPi();
-					}
-				}else{    //换乘3次
-					time = 999999;
-
-					for(int i : S.getLinesInThisStation()){
-						for(int j : G.getRelationLinesMap().get(i)){
-							if(T.getLinesInThisStation().contains(j))
-								continue;
-							for (int q : G.getRelationLinesMap().get(j)){
-								if(T.getLinesInThisStation().contains(q) || q == i)
-									continue;
-								for(int p : T.getLinesInThisStation()){
-									int[] newLine1 = new int[G.getMatrixTogether().length];
-									int[] newLine2 = new int[G.getMatrixTogether().length];
-									int[] firstChangeStationIndex1 = new int[G.getMatrixTogether().length];
-									int[] firstChangeStationIndex2 = new int[G.getMatrixTogether().length];
-
-									for(int o = 0; o < newLine1.length; o++){
-										newLine1[o] = 999999;
-										newLine2[o] = 999999;
-									}
-
-									for(int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
-										for (int k = 0; k < G.getMatrixTogether().length; k++) {
-											if(G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0){
-
-											}else {
-												int newTmp1 = G.getMatrixChangeLeastArrList().get(i)[Sindex][k] + G.getMatrixChangeLeastArrList().get(j)[k][l];
-												if(newLine1[l] > newTmp1){
-													newLine1[l] = newTmp1;
-													firstChangeStationIndex1[l] = k;
-												}
-											}
-										}
-										if(newLine1[l] == 999999)
-											newLine1[l] = 0;
-									}
-
-									for(int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
-										for (int k = 0; k < G.getMatrixTogether().length; k++) {
-											if(newLine1[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][l] == 0){
-
-											}else {
-												int newTmp2 = newLine1[k] + G.getMatrixChangeLeastArrList().get(q)[k][l];
-												if(newLine2[l] > newTmp2){
-													newLine2[l] = newTmp2;
-													firstChangeStationIndex2[l] = k;
-												}
-											}
-										}
-										if(newLine2[l] == 999999)
-											newLine2[l] = 0;
-									}
-
-
-									for(int k = 0; k < G.getMatrixTogether().length; k++){
-										if(newLine2[k] == 0 || G.getMatrixChangeLeastArrList().get(p)[k][Tindex] == 0){
-
-										}else {
-											int timeTmp = newLine2[k] + G.getMatrixChangeLeastArrList().get(p)[k][Tindex];
-											if(timeTmp < time){
-												time = timeTmp;
-												changeRoute[0] = i;
-												changeRoute[1] = j;
-												changeRoute[2] = q;
-												changeRoute[3] = p;
-												changeStation[0] = G.getVertexList().get(firstChangeStationIndex1[firstChangeStationIndex2[k]]);
-												changeStation[1] = G.getVertexList().get(firstChangeStationIndex2[k]);
-												changeStation[2] = G.getVertexList().get(k);
-											}
-										}
+										changeRoute[3] = p;
+										changeStation[0] = G.getVertexList().get(firstChangeStationIndex1[firstChangeStationIndex2[k]]);
+										changeStation[1] = G.getVertexList().get(firstChangeStationIndex2[k]);
+										changeStation[2] = G.getVertexList().get(k);
 									}
 								}
 							}
 						}
 					}
-					if(changeRoute[0] != 999999){
-						dijkstra(G.getRoutes().get(changeRoute[0]),S,changeStation[0]);
-						tmp = changeStation[0];
-						while (tmp != null){
-							addresses.add(0,tmp);
-							tmp = tmp.getPi();
-						}
-						int start = addresses.size();
-						dijkstra(G.getRoutes().get(changeRoute[1]),changeStation[0],changeStation[1]);
-						tmp = changeStation[1];
-						while (tmp != changeStation[0]){
-							addresses.add(start,tmp);
-							tmp = tmp.getPi();
-						}
-						int start_ = addresses.size();
-						dijkstra(G.getRoutes().get(changeRoute[2]),changeStation[1],changeStation[2]);
-						tmp = changeStation[2];
-						while (tmp != changeStation[1]){
-							addresses.add(start_,tmp);
-							tmp = tmp.getPi();
-						}
-						int start__ = addresses.size();
-						dijkstra(G.getRoutes().get(changeRoute[3]),changeStation[2],T);
-						tmp = T;
-						while (tmp != changeStation[2]){
-							addresses.add(start__,tmp);
-							tmp = tmp.getPi();
-						}
-
-					}else {
-						dijkstra(G,S,T);
-						tmp = T;
-						while (tmp != null){
-							addresses.add(0,tmp);
-							tmp = tmp.getPi();
-						}
-						return addresses;
-					}
 				}
-
 			}
+
+			dijkstra(G.getRoutes().get(changeRoute[0]), S, changeStation[0]);
+			tmp = changeStation[0];
+			while (tmp != null) {
+				addresses.add(0, tmp);
+				tmp = tmp.getPi();
+			}
+			int start = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[1]), changeStation[0], changeStation[1]);
+			tmp = changeStation[1];
+			while (tmp != changeStation[0]) {
+				addresses.add(start, tmp);
+				tmp = tmp.getPi();
+			}
+			int start_ = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[2]), changeStation[1], changeStation[2]);
+			tmp = changeStation[2];
+			while (tmp != changeStation[1]) {
+				addresses.add(start_, tmp);
+				tmp = tmp.getPi();
+			}
+			int start__ = addresses.size();
+			dijkstra(G.getRoutes().get(changeRoute[3]), changeStation[2], T);
+			tmp = T;
+			while (tmp != changeStation[2]) {
+				addresses.add(start__, tmp);
+				tmp = tmp.getPi();
+			}
+			return addresses;
 		}
+
+		if (timesForChange >= 4){
+			dijkstra(G,S,T);
+			tmp = T;
+			while (tmp != null){
+				addresses.add(0,tmp);
+				tmp = tmp.getPi();
+			}
+			return addresses;
+		}
+
 		T.setD(time);
 		return addresses;
 	}
@@ -939,4 +988,82 @@ public class IndexService
 		}
 		return returnMatrix;
 	}
+	private int[][] BFS(Graph G) throws InterruptedException {
+		int[][] matrixTLC = new int[G.getVertxeUnion().size()][G.getVertxeUnion().size()];
+		int[] color = new int[G.getVertxeUnion().size()];
+		Queue<Integer> queue = new Queue<Integer>();
+		for(int i = 0; i < matrixTLC.length; i++){
+			for (int j = 0; j < color.length; j++){
+				color[j] = 0;
+			}
+			color[i] = 1;//grey
+			queue.enqueue(i);
+			while (!queue.isEmpty()){
+				int u = queue.dequeue();
+				for (int j : G.getRelationLinesMap().get(u)){
+					if(color[j] == 0){
+						color[j] = 1;
+						matrixTLC[i][j] = matrixTLC[i][u] + 1;
+						queue.enqueue(j);
+					}
+				}
+				color[u] = 2;//black
+			}
+			for(int o = 0; o < matrixTLC[i].length; o++){
+				System.out.print("  "+matrixTLC[i][o]);
+			}
+			System.out.print("\n\n");
+		}
+		return matrixTLC;
+	}
+
+//	private int[][] makeMatrix(ArrayList<int[][]> matrixArrL){
+//		int[][] returnMatrix = new int[matrixArrL.get(0).length][matrixArrL.get(0).length];
+//		for(int i = 0; i < matrixArrL.size(); i++){
+//			for(int j = 0; j < matrixArrL.get(0).length; j++){
+//				for (int k = 0; k < matrixArrL.get(0).length; k++){
+//					if(matrixArrL.get(i)[j][k] != 0)
+//						returnMatrix[j][k] = 1;
+//				}
+//			}
+//		}
+//		int times = 1;
+//		while (!testMatrix(returnMatrix)){
+//			times++;
+//			returnMatrix = mulMatrix(returnMatrix,times) ;
+//
+//			for(int i = 0; i < returnMatrix.length; i++){
+//				for(int j = 0; j < returnMatrix.length; j++){
+//					System.out.print(" "+ returnMatrix[i][j]);
+//				}
+//				System.out.println();
+//			}
+//		}
+//		return returnMatrix;
+//
+//	}
+//	private int[][] mulMatrix(int[][] matrix,int times){
+//		int[][] returnMatrix = new int[matrix.length][matrix.length];
+//		for(int i = 0; i < matrix.length; i++){
+//			for(int j = 0; j < matrix.length; j++){
+//				for(int k = 0; k < matrix.length; k++){
+//					if(matrix[i][k] == 0 || matrix[k][j] == 0){
+//
+//					}else if(returnMatrix[i][j] != 0){
+//						returnMatrix[i][j] = times;
+//					}
+//				}
+//			}
+//		}
+//		return returnMatrix;
+//	}
+//	private boolean testMatrix(int[][] matrix){
+//		for(int i = 0; i < matrix.length; i++){
+//			for(int j = 0; j < matrix.length; j++){
+//				if(matrix[i][j] == 0)
+//					return false;
+//			}
+//		}
+//		return true;
+//	}
 }

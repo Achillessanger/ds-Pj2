@@ -22,6 +22,9 @@ public class Graph {
     private ArrayList<String> stationNameArrL = new ArrayList<>();
     private ArrayList<Graph> routes = new ArrayList<>();
     private Map<Integer,ArrayList<Integer>> relationLinesMap = new HashMap<>();
+    private int[][] zuiXiaoHuanChengCiShu;
+    private ArrayList<Relations> re = new ArrayList<>();
+
 
     public Graph(){
         vertexList = new ArrayList<Address>();
@@ -95,5 +98,17 @@ public class Graph {
 
     public Map<Integer, ArrayList<Integer>> getRelationLinesMap() {
         return relationLinesMap;
+    }
+
+    public int[][] getZuiXiaoHuanChengCiShu() {
+        return zuiXiaoHuanChengCiShu;
+    }
+
+    public void setZuiXiaoHuanChengCiShu(int[][] zuiXiaoHuanChengCiShu) {
+        this.zuiXiaoHuanChengCiShu = zuiXiaoHuanChengCiShu;
+    }
+
+    public ArrayList<Relations> getRe() {
+        return re;
     }
 }
