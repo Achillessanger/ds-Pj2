@@ -374,6 +374,33 @@ public class IndexService
 				}
 				graph.setMatrixTogether(matrixAddAll(graph.getMatrixChangeLeastArrList()));
 
+				for(Address address : graph.getVertexList()){
+					if(address.getLinesInThisStation().size() <= 1)
+						continue;
+					for (int i : address.getLinesInThisStation()){
+						for(int j : address.getLinesInThisStation()){
+							if(j == i)
+								continue;
+							if(!graph.getPublicStations()[i][j].contains(graph.getMapMatrixIndex().get(address.getAddress()))){
+								graph.getPublicStations()[i][j].add(graph.getMapMatrixIndex().get(address.getAddress()));
+							}
+						}
+					}
+				}
+
+				//////////////////
+				System.out.println("now=======");
+				for(int i = 0; i < 17; i++){
+					for(int j = i; j < 17; j++){
+						System.out.print(i+"  "+j+"  ");
+						for(int k : graph.getPublicStations()[i][j]){
+							System.out.print("  "+ graph.getVertexList().get(k).getAddress());
+						}
+						System.out.print("\n");
+					}
+
+				}
+
 
 
 
@@ -665,7 +692,7 @@ public class IndexService
 					if(G.getZuiXiaoHuanChengCiShu()[i][j] != 1)
 						continue;
 					int timeTmp = 0;
-					for (int k = 0; k < G.getMatrixTogether().length; k++) {
+					for (int k : G.getPublicStations()[i][j]) {//int k = 0; k < G.getMatrixTogether().length; k++//////////////////////////////////////////////////
 						if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][Tindex] == 0)
 							timeTmp = 0;
 						else {
@@ -717,8 +744,8 @@ public class IndexService
 						for (int o = 0; o < newLine.length; o++) {
 							newLine[o] = 999999;
 						}
-						for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
-							for (int k = 0; k < G.getMatrixTogether().length; k++) {
+						for (int l : G.getPublicStations()[j][q]) {//newline 的 index //int l = 0; l < G.getMatrixTogether().length; l++
+							for (int k : G.getPublicStations()[i][j]) {//int k = 0; k < G.getMatrixTogether().length; k++
 								if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0)
 									lineTmp = 0;
 								else {
@@ -729,11 +756,16 @@ public class IndexService
 									}
 								}
 							}
-							if (newLine[l] == 999999)
-								newLine[l] = 0;
+//							if (newLine[l] == 999999)
+//								newLine[l] = 0;
+
+						}
+						for (int o = 0; o < newLine.length; o++) {
+							if (newLine[o] == 999999)
+								newLine[o] = 0;
 						}
 
-						for (int k = 0; k < G.getMatrixTogether().length; k++) {
+						for (int k : G.getPublicStations()[j][q]) {//int k = 0; k < G.getMatrixTogether().length; k++
 							if (newLine[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][Tindex] == 0)
 								timeTmp = 0;
 							else {
@@ -801,8 +833,8 @@ public class IndexService
 								newLine2[o] = 999999;
 							}
 
-							for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
-								for (int k = 0; k < G.getMatrixTogether().length; k++) {
+							for (int l : G.getPublicStations()[j][q]) { //newline 的 index //int l = 0; l < G.getMatrixTogether().length; l++
+								for (int k : G.getPublicStations()[i][j]) {//int k = 0; k < G.getMatrixTogether().length; k++
 									if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][l] == 0) {
 
 									} else {
@@ -813,12 +845,17 @@ public class IndexService
 										}
 									}
 								}
-								if (newLine1[l] == 999999)
-									newLine1[l] = 0;
+//								if (newLine1[l] == 999999)
+//									newLine1[l] = 0;
+
+							}
+							for (int o = 0; o < newLine1.length; o++) {
+								if (newLine1[o] == 999999)
+									newLine1[o] = 0;
 							}
 
-							for (int l = 0; l < G.getMatrixTogether().length; l++) { //newline 的 index
-								for (int k = 0; k < G.getMatrixTogether().length; k++) {
+							for (int l : G.getPublicStations()[q][p]) { //newline 的 index //int l = 0; l < G.getMatrixTogether().length; l++
+								for (int k : G.getPublicStations()[j][q]) {//int k = 0; k < G.getMatrixTogether().length; k++
 									if (newLine1[k] == 0 || G.getMatrixChangeLeastArrList().get(q)[k][l] == 0) {
 
 									} else {
@@ -829,12 +866,16 @@ public class IndexService
 										}
 									}
 								}
-								if (newLine2[l] == 999999)
-									newLine2[l] = 0;
+//								if (newLine2[l] == 999999)
+//									newLine2[l] = 0;
+							}
+							for (int o = 0; o < newLine2.length; o++) {
+								if (newLine2[o] == 999999)
+									newLine2[o] = 0;
 							}
 
 
-							for (int k = 0; k < G.getMatrixTogether().length; k++) {
+							for (int k : G.getPublicStations()[q][p]) {//int k = 0; k < G.getMatrixTogether().length; k++
 								if (newLine2[k] == 0 || G.getMatrixChangeLeastArrList().get(p)[k][Tindex] == 0) {
 
 								} else {

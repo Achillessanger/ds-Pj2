@@ -42,10 +42,10 @@
 				onclick="clickButton()">查询</button>
 	</form>
 	<br/>
-	<div style="position:absolute;top:30%;width: 20%;height: 60%">
+	<div style="position:absolute;top:30%;width: 20%;height: 60%;">
 		<span style="font-size:18px;position:relative;">display the result:</span><br/>
 		<div id="resultDiv"
-			 style="background-color:rgba(255,255,255,0.75);width: 90%;height:100%;font-size:18px;word-wrap: break-word; overflow: scroll">
+			 style="background-color:rgba(255,255,255,0.75);width: 90%;height:100%;font-size:18px;word-wrap: break-word; overflow: scroll;">
 
 		</div>
 	</div>
@@ -108,6 +108,8 @@
             preE = $("#endAddress").val();
             clickButton2();
 		}else if($("#startAddress").val()==preS){
+            preS = $("#startAddress").val();
+            preE = $("#endAddress").val();
             var options = {
                 onSearchComplete: function(results){
                     if (local.getStatus() == BMAP_STATUS_SUCCESS){
@@ -122,6 +124,8 @@
             local.search($("#endAddress").val());
 
 		}else if($("#endAddress").val()==preE){
+            preS = $("#startAddress").val();
+            preE = $("#endAddress").val();
             var options = {
                 onSearchComplete: function(results){
                     if (local.getStatus() == BMAP_STATUS_SUCCESS){

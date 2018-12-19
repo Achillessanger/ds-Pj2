@@ -24,10 +24,17 @@ public class Graph {
     private Map<Integer,ArrayList<Integer>> relationLinesMap = new HashMap<>();
     private int[][] zuiXiaoHuanChengCiShu;
     private ArrayList<Relations> re = new ArrayList<>();
+    private ArrayList<Integer>[][] publicStations = new ArrayList[17][17];
 
 
     public Graph(){
         vertexList = new ArrayList<Address>();
+        for(int i = 0; i < 17; i++){
+            for(int j = 0; j < 17; j++){
+                ArrayList<Integer> a = new ArrayList<>();
+                publicStations[i][j] = a;
+            }
+        }
     }
 
     public void appendVertex(Address vertex){
@@ -110,5 +117,13 @@ public class Graph {
 
     public ArrayList<Relations> getRe() {
         return re;
+    }
+
+    public ArrayList<Integer>[][] getPublicStations() {
+        return publicStations;
+    }
+
+    public void setPublicStations(ArrayList<Integer>[][] publicStations) {
+        this.publicStations = publicStations;
     }
 }
