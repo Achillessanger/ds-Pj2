@@ -4,11 +4,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
 	<style type="text/css">
 		body, html, #allmap {
 			width: 100%;
 			height: 100%;
-			overflow: scroll;
+			overflow: hidden;
 			margin: 0;
 			font-family: "微软雅黑";
 		}
@@ -20,10 +21,11 @@
 </head>
 <body style="height:100%;width: 100%;font-size:0px">
 <input id="hiddenBaseUrl" type="hidden" value="${baseUrl}"/>
-<div style="width:80%;display: inline-block;" id="allmap"></div>
-<div style="width:20%; height:100%;display:inline-block; ">
-	<form style="position:absolute;font-size:16px;top:5%;" id="submitForm">
-		&nbsp;&nbsp;&nbsp;起点: <input type="text" name="startAddress" id="startAddress" value="复旦大学张江校区"/>
+
+<div style="width:100%;display: block; max-width: none" id="allmap"></div>
+<div style="width:100%; height:100%;display:block; float: left; overflow: auto">
+	<form style="position:absolute;font-size:16px;top:3%;background-color: rgba(255,255,255,0.6);width: 18%;" id="submitForm">
+		&nbsp;&nbsp;&nbsp;起点: <input  type="text" name="startAddress" id="startAddress" value="复旦大学张江校区"/>
 		<input type="hidden" id="hiddenStartLongitude" value="121.604569"/>
 		<input type="hidden" id="hiddenStartLatitude" value="31.196348"/>
 		<br/><br/>
@@ -31,17 +33,19 @@
 		<input type="hidden" id="hiddenEndLongitude" value="121.478941"/>
 		<input type="hidden" id="hiddenEndLatitude" value="31.236009"/>
 		<br/><br/>
-		&nbsp;&nbsp;&nbsp;<input type="radio" name="items" value="1"/>步行最少<br/>
+
+		&nbsp;&nbsp;&nbsp;<input type="radio" name="items" value="1" checked/>步行最少<br/>
 		&nbsp;&nbsp;&nbsp;<input type="radio" name="items" value="2"/>换乘最少<br/>
 		&nbsp;&nbsp;&nbsp;<input type="radio" name="items" value="3"/>时间最短<br/><br/>
-		<input style="position:relative;left:40%;width:80px;height:30px;" type="button" value="查询"
-			   onclick="clickButton()">
+
+		<button class="btn btn-outline-dark" style="position:relative;left:40%;width:80px;height:30px; " type="button" value="查询"
+				onclick="clickButton()">查询</button>
 	</form>
 	<br/>
 	<div style="position:absolute;top:30%;width: 20%;height: 60%">
 		<span style="font-size:18px;position:relative;">display the result:</span><br/>
 		<div id="resultDiv"
-			 style="background-color:#F5F5F5;width: 90%;height:100%;font-size:18px;word-wrap: break-word; ">
+			 style="background-color:rgba(255,255,255,0.75);width: 90%;height:100%;font-size:18px;word-wrap: break-word; overflow: scroll">
 
 		</div>
 	</div>
@@ -51,6 +55,8 @@
 <script type="text/javascript">
     // 百度地图API功能
 	var rightclick = 0;
+	var preS;
+	var preE;
     var map = new BMap.Map("allmap");    // 创建Map实例
     map.centerAndZoom("上海", 16);  // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
@@ -97,12 +103,43 @@
 
 
     function clickButton() {
-        if(rightclick == 1){
+        if(rightclick == 1 || ($("#startAddress").val()==preS && $("#endAddress").val()==preE)){
+            preS = $("#startAddress").val();
+            preE = $("#endAddress").val();
             clickButton2();
-		}else {
+		}else if($("#startAddress").val()==preS){
+            var options = {
+                onSearchComplete: function(results){
+                    if (local.getStatus() == BMAP_STATUS_SUCCESS){
+                        // 判断状态是否正确
+                        document.getElementById("hiddenEndLongitude").value = results.getPoi(0).point.lng;
+                        document.getElementById("hiddenEndLatitude").value = results.getPoi(0).point.lat;
+                        clickButton2();
+                    }
+                }
+            };
+            var local = new BMap.LocalSearch(map, options);
+            local.search($("#endAddress").val());
+
+		}else if($("#endAddress").val()==preE){
+            var options = {
+                onSearchComplete: function(results){
+                    if (local.getStatus() == BMAP_STATUS_SUCCESS){
+                        // 判断状态是否正确
+                        document.getElementById("hiddenStartLongitude").value = results.getPoi(0).point.lng;
+                        document.getElementById("hiddenStartLatitude").value = results.getPoi(0).point.lat;
+                        clickButton2();
+                    }
+                }
+            };
+            var local = new BMap.LocalSearch(map, options);
+            local.search($("#startAddress").val());
+		} else {
             var start = document.getElementById("startAddress").value;
             var end = document.getElementById("endAddress").value;
             // alert(start+" "+end)
+            preS = $("#startAddress").val();
+            preE = $("#endAddress").val();
 
             if(start.length <= 0){
                 alert("请输入起点");
@@ -211,6 +248,7 @@
                 }else {
                     str += "直接步行距离： " + data.distance1 + " 米" + "<br/>";
                 }
+                str += "本次搜索耗时： "+ data.nanoTime + " (ns)"
 
                 $("#resultDiv").html(str);
             },
@@ -230,4 +268,7 @@
         marker.setLabel(label);
     }
 </script>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </html>

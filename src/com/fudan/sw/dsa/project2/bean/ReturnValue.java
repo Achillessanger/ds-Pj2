@@ -8,8 +8,9 @@ public class ReturnValue
 	List<Address>subwayList;
 	Address endPoint;
 	double minutes;
-	double distance1;
-	double distance2;
+	int distance1;
+	int distance2;
+	long nanoTime;
 	public Address getStartPoint() {
 		return startPoint;
 	}
@@ -39,7 +40,7 @@ public class ReturnValue
 		return distance1;
 	}
 
-	public void setDistance1(double distance1) {
+	public void setDistance1(int distance1) {
 		this.distance1 = distance1;
 	}
 
@@ -47,7 +48,15 @@ public class ReturnValue
 		return distance2;
 	}
 
-	public void setDistance2(double distance2) {
+	public void setDistance2(int distance2) {
 		this.distance2 = distance2;
+	}
+
+	public long getNanoTime() {
+		return nanoTime;
+	}
+
+	public void setNanoTime(long nanoTime) {
+		this.nanoTime = nanoTime;
 	}
 }

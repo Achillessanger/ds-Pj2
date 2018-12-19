@@ -427,6 +427,7 @@ public class IndexService
 		String choose = params.get("choose").toString();
 		double minDistance1 = 99999999;
 		double minDisrance2 = 99999999;
+		long nanoTime = 0;
 		
 		System.out.println(startAddress);
 		System.out.println(startLongitude);
@@ -444,6 +445,7 @@ public class IndexService
 		{
 		case "1":
 			//步行最少
+			long t11 = System.nanoTime();
 			addresses.clear();
 			Address startVertex = null; //= graph.getVertexList().get(0)
 			Address endVertex = null;
@@ -453,21 +455,17 @@ public class IndexService
 				if(getDistance(startPoint,address) < minDistance1){
 					startVertex = address;
 					minDistance1 = getDistance(startPoint,address);
-					if(minDistance1 < 10){
-						int debug = 0;
-					}
 				}
 				if(getDistance(endPoint,address) < minDisrance2){
 					endVertex = address;
 					minDisrance2 = getDistance(endPoint,address);
-					if(minDisrance2 < 10){
-						int debug = 0;
-					}
 				}
 
 			}
 
 			dijkstra(graph,startVertex,endVertex);
+			long t22 = System.nanoTime() - t11;
+			nanoTime = t22;
 			Address tmp = endVertex;
 			while (tmp != null){
 				addresses.add(0,tmp);
@@ -481,7 +479,7 @@ public class IndexService
 			break;
 		case "2":
 			//换乘最少
-			long t1 = System.currentTimeMillis();
+			long t1 = System.nanoTime();
 			addresses.clear();
 			Address startVertex2 = null; //= graph.getVertexList().get(0)
 			Address endVertex2 = null;
@@ -516,14 +514,14 @@ public class IndexService
 //				addresses.add(0,tmp2);
 //				tmp2 = tmp2.getPi();
 //			}
-			System.out.println(endVertex2.getD());
+			long t2 = System.nanoTime() - t1;
+			nanoTime = t2;
 //
 //			System.out.println("距离1："+minDistance12);
 //			System.out.println("距离2："+minDisrance22);
 
 			time = endVertex2.getD() + (int)((minDistance1 + minDisrance2) / (5000 / 60));
-			long t2 = System.currentTimeMillis() - t1;
-			System.out.println("case2用时： "+t2+" ms");
+
 			endVertex2.setD(999999);
 
 
@@ -531,6 +529,7 @@ public class IndexService
 			break;
 		case "3":
 			//时间最短:
+			long t13 = System.nanoTime();
 			addresses.clear();
 
 			for(Address address : graph.getVertexList()){
@@ -545,6 +544,8 @@ public class IndexService
 			graph.getVertexList().add(startPoint);
 			graph.getVertexList().add(endPoint);
 			dijkstra(graph,startPoint,endPoint);
+			long t23 = System.nanoTime() - t13;
+			nanoTime = t23;
 			Address tmp3 = endPoint.getPi();
 			while (tmp3 != null){
 				addresses.add(0,tmp3);
@@ -582,8 +583,9 @@ public class IndexService
 		returnValue.setEndPoint(endPoint);
 		returnValue.setSubwayList(addresses);
 		returnValue.setMinutes(time);
-		returnValue.setDistance1(minDistance1);
-		returnValue.setDistance2(minDisrance2);
+		returnValue.setDistance1((int)minDistance1);
+		returnValue.setDistance2((int)minDisrance2);
+		returnValue.setNanoTime(nanoTime);
 		return returnValue;
 	}
 
@@ -633,7 +635,10 @@ public class IndexService
 		int Sindex = G.getMapMatrixIndex().get(S.getAddress());
 		int Tindex = G.getMapMatrixIndex().get(T.getAddress());
 		if(timesForChange == 0){ //直接可以到达
-			for(int[][] m : G.getMatrixChangeLeastArrList()){
+			for(int i : S.getLinesInThisStation()){//int[][] m : G.getMatrixChangeLeastArrList()
+				if(!T.getLinesInThisStation().contains(i))
+					continue;
+				int[][] m = G.getMatrixChangeLeastArrList().get(i);
 				if(m[Sindex][Tindex] > 0){
 					if(time > m[Sindex][Tindex]){
 						time = m[Sindex][Tindex];
@@ -648,6 +653,7 @@ public class IndexService
 				addresses.add(0,tmp);
 				tmp = tmp.getPi();
 			}
+			T.setD(time);
 			return addresses;
 		}
 		if(timesForChange == 1) {
@@ -656,6 +662,8 @@ public class IndexService
 			for (int i : S.getLinesInThisStation()) {
 				for (int j : T.getLinesInThisStation()) {
 					//换乘1次
+					if(G.getZuiXiaoHuanChengCiShu()[i][j] != 1)
+						continue;
 					int timeTmp = 0;
 					for (int k = 0; k < G.getMatrixTogether().length; k++) {
 						if (G.getMatrixChangeLeastArrList().get(i)[Sindex][k] == 0 || G.getMatrixChangeLeastArrList().get(j)[k][Tindex] == 0)
@@ -687,6 +695,7 @@ public class IndexService
 				addresses.add(start, tmp);
 				tmp = tmp.getPi();
 			}
+			T.setD(time);
 			return addresses;
 
 		}
@@ -699,6 +708,8 @@ public class IndexService
 					if (T.getLinesInThisStation().contains(j))//////////////////////////////////////////?????????
 						continue;
 					for (int q : T.getLinesInThisStation()) {//int q = 0; q < G.getMatrixChangeLeastArrList().size(); q++
+						if(G.getZuiXiaoHuanChengCiShu()[j][q] != 1)
+							continue;
 						int lineTmp = 0;
 						int timeTmp = 0;
 						int[] newLine = new int[G.getMatrixTogether().length];
@@ -762,6 +773,7 @@ public class IndexService
 				addresses.add(start_, tmp);
 				tmp = tmp.getPi();
 			}
+			T.setD(time);
 			return addresses;
 
 		}
@@ -777,6 +789,8 @@ public class IndexService
 						if (T.getLinesInThisStation().contains(q) || q == i)
 							continue;
 						for (int p : T.getLinesInThisStation()) {
+							if(G.getZuiXiaoHuanChengCiShu()[q][p] != 1)
+								continue;
 							int[] newLine1 = new int[G.getMatrixTogether().length];
 							int[] newLine2 = new int[G.getMatrixTogether().length];
 							int[] firstChangeStationIndex1 = new int[G.getMatrixTogether().length];
@@ -869,6 +883,7 @@ public class IndexService
 				addresses.add(start__, tmp);
 				tmp = tmp.getPi();
 			}
+			T.setD(time);
 			return addresses;
 		}
 
@@ -879,6 +894,7 @@ public class IndexService
 				addresses.add(0,tmp);
 				tmp = tmp.getPi();
 			}
+			T.setD(time);
 			return addresses;
 		}
 
@@ -894,7 +910,7 @@ public class IndexService
 		Address min = Q.get(0);
 		Q.remove(0);
 		if(Q.size() == 0){
-			return null;
+			return min;
 		}
 		Q.add(0,Q.get(Q.size()-1));
 		Q.remove(Q.size()-1);
